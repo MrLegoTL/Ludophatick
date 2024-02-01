@@ -127,6 +127,7 @@ public class PlayerController : MonoBehaviour
     {
         anim.SetBool("IsMoving", isMoving);
         anim.SetBool("Grounded", grounded);
+        
         //// Activa la animación si el jugador se está moviendo
         //if ((horizontal != 0 || vertical != 0))
         //{
@@ -163,10 +164,11 @@ public class PlayerController : MonoBehaviour
     {
         if (grounded)
         {
-            
+            anim.SetTrigger("Jump");
             //si estamos encontacto con elsuelo, aplicamos una fuerza vertical de tipo impulso
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            //rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
+        
         
         
     }
