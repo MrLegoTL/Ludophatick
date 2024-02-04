@@ -32,6 +32,14 @@ public class PlayerController : MonoBehaviour
     private bool grounded;
     //tamaño del groundcheck
     public Vector3 groundCheckSize;
+
+    [Header("Collision Pre-Detection")]
+    public LayerMask checkLayer;
+    public Transform checkPoint;
+    public float checkSize = 0.3f;
+    [Range(0, 3)]
+    public float checkDistance = 2f;
+    public bool walled;
     
 
     [Header("Animator")]
@@ -53,6 +61,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         GrounCheck();
+        CollisionPreDetection();
         Controls();
         Movement();
         AnimatorFeed();
@@ -66,6 +75,10 @@ public class PlayerController : MonoBehaviour
         Gizmos.color = Color.red;
         //pintamos un cubo para visualizar el area de groundcheck
         Gizmos.DrawWireCube(groundCheck.position, groundCheckSize);
+
+        Gizmos.color = Color.blue;
+        //mostramos el gizmo de check de colision en la direccion de movimiento
+        Gizmos.DrawWireSphere(checkPoint.position, checkSize);
     }
     #endregion
     #region METHODS
@@ -97,7 +110,15 @@ public class PlayerController : MonoBehaviour
         //calculamos la velocidad deseada en base a la driecion y la velocidad maxima
         desiredVelocity = direction * movementSpeed;
 
-        if((horizontal!=0 || vertical != 0) && grounded)
+        Vector3 temp = transform.position + (direction * checkDistance);
+        //respetamos la altura que ya tuviese el checkpoint
+        temp.y = checkPoint.position.y;
+        //movmeos el checkpoint a su posicion final
+        checkPoint.position = temp;
+
+        if (walled) desiredVelocity = Vector3.zero;
+
+        if ((horizontal!=0 || vertical != 0) && grounded && !walled)
         {
             //aplicamos la velocidad deseada , aumentando frame a frame en base a la aceleracion
             rb.velocity = Vector3.MoveTowards(rb.velocity, desiredVelocity, Time.deltaTime * acceleration);
@@ -113,7 +134,7 @@ public class PlayerController : MonoBehaviour
             isMoving = true;
         }
         //En caso de no existir input, paramos la rotacion del tanque
-        if ((horizontal == 0 && vertical == 0))
+        if ((horizontal == 0 && vertical == 0) || walled)
         {
             rb.angularVelocity = Vector3.zero;
             isMoving = false;
@@ -155,6 +176,22 @@ public class PlayerController : MonoBehaviour
 
         //si el cvalor delprimer elemento del buffer es distinto de null, consideramos que estamos tocando el suelo
         grounded = colliderBuffer[0] != null;
+    }
+
+    /// <summary>
+    /// Detecta si hya un collider del layer indicado en contacto con el checker de colision de desplazamiento
+    /// </summary>
+    private void CollisionPreDetection()
+    {
+        //inicializamos el buffer
+        colliderBuffer[0] = null;
+
+        Physics.OverlapSphereNonAlloc(checkPoint.position,
+                                       checkSize,
+                                       colliderBuffer,
+                                        checkLayer);
+
+        walled = colliderBuffer[0] != null;
     }
 
     /// <summary>
