@@ -47,6 +47,8 @@ public class PlayerController : MonoBehaviour
     private bool leftGun = true;
     public Transform gunLeft;
     public Transform gunRight;
+    //id de la pool de la cual recuperar los proyectiles
+    public string bulletType = "RegularBullets";
 
 
     [Header("Animator")]
@@ -229,10 +231,13 @@ public class PlayerController : MonoBehaviour
         if (leftGun)
         {
             anim.SetTrigger("Shoot Left");
+            //solicitamos a la pool activar un proyectil en el cañon izquierdo
+            PoolManager.instance.Pull(bulletType, gunLeft.position,Quaternion.LookRotation(gunLeft.forward));
         }
         else
         {
             anim.SetTrigger("Shoot Right");
+            PoolManager.instance.Pull(bulletType, gunRight.position, Quaternion.LookRotation(gunRight.forward));
         }
 
         shootTime = Time.time + shootDelay;
