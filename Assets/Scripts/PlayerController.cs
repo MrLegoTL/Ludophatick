@@ -40,7 +40,14 @@ public class PlayerController : MonoBehaviour
     [Range(0, 3)]
     public float checkDistance = 2f;
     public bool walled;
-    
+
+    [Header("Shooting")]
+    public float shootDelay = 0.5f;
+    private float shootTime = 0f;
+    private bool leftGun = true;
+    public Transform gunLeft;
+    public Transform gunRight;
+
 
     [Header("Animator")]
     public Animator anim;
@@ -94,6 +101,10 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButtonDown("Jump"))
         {
             Jump();
+        }
+        if (Input.GetButton("Fire1"))
+        {
+            Shoot();
         }
     }
 
@@ -208,6 +219,26 @@ public class PlayerController : MonoBehaviour
         
         
         
+    }
+
+    private void Shoot()
+    {
+        // si no hemoas superado el timpo estimado para poder volver a disparar, no haremos nada
+        if (Time.time < shootTime) return;
+
+        if (leftGun)
+        {
+            anim.SetTrigger("Shoot Left");
+        }
+        else
+        {
+            anim.SetTrigger("Shoot Right");
+        }
+
+        shootTime = Time.time + shootDelay;
+        leftGun = !leftGun;
+
+        anim.SetFloat("ShootSpeed", 1 / shootDelay);
     }
     #endregion
 }
