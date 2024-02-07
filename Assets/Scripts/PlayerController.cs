@@ -50,6 +50,16 @@ public class PlayerController : MonoBehaviour
     //id de la pool de la cual recuperar los proyectiles
     public string bulletType = "RegularBullets";
 
+    [Header("Aiming")]
+    //longitud del raycas a realizar
+    public float camRayLenght;
+    //layer que podras ser "tocado" con el cursor del raton
+    public LayerMask pointerLayer;
+    //transform usado como objetivo para la rotacion
+    public Transform aimingPivot;
+    //para almacenar la referencia de la camara principal
+   public Camera cameraMain;
+
 
     [Header("Animator")]
     public Animator anim;
@@ -74,6 +84,7 @@ public class PlayerController : MonoBehaviour
         Controls();
         Movement();
         AnimatorFeed();
+        AimingBehaviour();
     }
 
     private void OnDrawGizmos()
@@ -244,6 +255,25 @@ public class PlayerController : MonoBehaviour
         leftGun = !leftGun;
 
         anim.SetFloat("ShootSpeed", 1 / shootDelay);
+    }
+
+    /// <summary>
+    /// Apuntado de la torreta hacia la posicion del curso en pantalla
+    /// </summary>
+    private void AimingBehaviour()
+    {
+        //definimos el ray en base a la posicion del cursor en pantalla
+        Ray camRay = cameraMain.ScreenPointToRay(Input.mousePosition);
+        //variable temporal para alamcenar el resultado del raycast
+        RaycastHit groundHit = new RaycastHit();
+
+        //realizamos el raycast
+        if(Physics.Raycast(camRay, out groundHit, camRayLenght, pointerLayer))
+        {
+            //en caso de que impacter contra una superfice dentro dle layer
+            // desplazo el punto pivote para la rotacion de la torreta
+            aimingPivot.position = new Vector3(groundHit.point.x,aimingPivot.position.y, groundHit.point.z);
+        }
     }
     #endregion
 }
