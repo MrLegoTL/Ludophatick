@@ -258,7 +258,7 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// Apuntado de la torreta hacia la posicion del curso en pantalla
+    /// Apuntado de las pistolas hacia la posicion del curso en pantalla
     /// </summary>
     private void AimingBehaviour()
     {
@@ -270,8 +270,8 @@ public class PlayerController : MonoBehaviour
         //realizamos el raycast
         if(Physics.Raycast(camRay, out groundHit, camRayLenght, pointerLayer))
         {
-            //en caso de que impacter contra una superfice dentro dle layer
-            // desplazo el punto pivote para la rotacion de la torreta
+            //en caso de que impacter contra una superfice dentro de layer
+            // desplazo el punto pivote para la rotacion de las pistolas
             aimingPivot.position = new Vector3(groundHit.point.x,aimingPivot.position.y, groundHit.point.z);
         }
     }
