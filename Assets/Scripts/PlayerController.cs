@@ -155,6 +155,8 @@ public class PlayerController : MonoBehaviour
                                                    Quaternion.LookRotation(desiredVelocity),
                                                    Time.deltaTime * rotationSpeed);
 
+
+
             isMoving = true;
         }
         //En caso de no existir input, paramos la rotacion del tanque
@@ -227,7 +229,7 @@ public class PlayerController : MonoBehaviour
         {
             anim.SetTrigger("Jump");
             //si estamos encontacto con elsuelo, aplicamos una fuerza vertical de tipo impulso
-            //rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
         
         
@@ -273,6 +275,9 @@ public class PlayerController : MonoBehaviour
             //en caso de que impacter contra una superfice dentro de layer
             // desplazo el punto pivote para la rotacion de las pistolas
             aimingPivot.position = new Vector3(groundHit.point.x,aimingPivot.position.y, groundHit.point.z);
+
+           
+
         }
     }
     #endregion
