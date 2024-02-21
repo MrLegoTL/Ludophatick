@@ -4999,7 +4999,7 @@ MonoBehaviour:
   rigidBody: {fileID: 5943276436717338708}
   trail: {fileID: 1097852563937363276}
   damage: 10
-  speed: 10
+  speed: 20
   lifeTime: 5
   shootableLayer:
     serializedVersion: 2
