@@ -49,6 +49,8 @@ public class PlayerController : MonoBehaviour
     public Transform gunRight;
     //id de la pool de la cual recuperar los proyectiles
     public string bulletType = "RegularBullets";
+    //variable para la distancia minima del disparo
+    public float minShootDistance = 1f;
 
     [Header("Aiming")]
     //longitud del raycas a realizar
@@ -59,6 +61,8 @@ public class PlayerController : MonoBehaviour
     public Transform aimingPivot;
     //para almacenar la referencia de la camara principal
    public Camera cameraMain;
+    // Almacena la última dirección de mira
+    private Vector3 lastAimDirection;
 
 
     [Header("Animator")]
@@ -86,6 +90,7 @@ public class PlayerController : MonoBehaviour
         AnimatorFeed();
         AimingBehaviour();
     }
+
 
     private void OnDrawGizmos()
     {
@@ -239,71 +244,23 @@ public class PlayerController : MonoBehaviour
 
     private void Shoot()
     {
-
-        //// Si no hemos superado el tiempo estimado para poder volver a disparar, no haremos nada
-        //if (Time.time < shootTime) return;
-
-        //// Determinamos el cañón desde el cual disparar y la posición de disparo
-        //Transform gun = leftGun ? gunLeft : gunRight;
-
-
-        //Ray camRay = cameraMain.ScreenPointToRay(Input.mousePosition);
-        //RaycastHit hit;
-        //Vector3 shootDirection = Vector3.zero;
-
-        //// Realizamos un raycast desde la cámara para determinar hacia dónde apunta el jugador
-        //if (Physics.Raycast(camRay, out hit, camRayLenght, pointerLayer))
-        //{
-        //    // Calculamos la dirección desde el cañón hacia el punto de impacto, ignorando la componente vertical
-        //    Vector3 direction = hit.point - gun.position;
-        //    direction.y = 0;
-        //    shootDirection = direction.normalized;
-
-        //    // Activamos la animación correspondiente al lado del disparo
-        //    if (leftGun)
-        //    {
-        //        anim.SetTrigger("Shoot Left");
-        //        // Disparamos una bala en la dirección calculada
-        //        Quaternion rotation = Quaternion.LookRotation(shootDirection);
-        //        PoolManager.instance.Pull(bulletType, gun.position, rotation);
-        //    }
-        //    else
-        //    {
-        //        anim.SetTrigger("Shoot Right");
-        //        // Disparamos una bala en la dirección calculada
-        //        Quaternion rotation = Quaternion.LookRotation(shootDirection);
-        //        PoolManager.instance.Pull(bulletType, gun.position, rotation);
-        //    }
-        //}
-        //else
-        //{
-        //    // Si no impacta con nada, disparamos hacia adelante
-        //    shootDirection = cameraMain.transform.forward;
-        //}
-
-
-        //// Actualizamos el tiempo de disparo para el próximo disparo
-        //shootTime = Time.time + shootDelay;
-
-        //// Cambiamos el cañón para el próximo disparo
-        //leftGun = !leftGun;
-
-        //// Establecemos la velocidad de disparo para la animación
-        //anim.SetFloat("ShootSpeed", 1 / shootDelay);
-
+                
         // si no hemoas superado el timpo estimado para poder volver a disparar, no haremos nada
         if (Time.time < shootTime) return;
-
+        // Definimos el cañón desde el cual disparar y la posición de disparo
+        Transform gun = leftGun ? gunLeft : gunRight;
+        Vector3 shootPosition = gun.position;
+        Vector3 shootDirection = (aimingPivot.position - shootPosition).normalized;
         if (leftGun)
         {
             anim.SetTrigger("Shoot Left");
             //solicitamos a la pool activar un proyectil en el cañon izquierdo
-            PoolManager.instance.Pull(bulletType, gunLeft.position, Quaternion.LookRotation(gunLeft.forward));
+            PoolManager.instance.Pull(bulletType, gun.position, Quaternion.LookRotation(shootDirection));
         }
         else
         {
             anim.SetTrigger("Shoot Right");
-            PoolManager.instance.Pull(bulletType, gunRight.position, Quaternion.LookRotation(gunRight.forward));
+            PoolManager.instance.Pull(bulletType, gun.position, Quaternion.LookRotation(shootDirection));
         }
 
         shootTime = Time.time + shootDelay;
@@ -317,30 +274,48 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void AimingBehaviour()
     {
-        //definimos el ray en base a la posicion del cursor en pantalla
-        Ray camRay = cameraMain.ScreenPointToRay(Input.mousePosition);
-        //variable temporal para alamcenar el resultado del raycast
-        RaycastHit groundHit = new RaycastHit();
 
-        //realizamos el raycast
-        if(Physics.Raycast(camRay, out groundHit, camRayLenght, pointerLayer))
+        // Definimos la dirección del objetivo
+        Vector3 targetDirection=Vector3.zero;
+
+        // Verificamos si se está utilizando un ratón o un mando de Xbox
+        if (Input.mousePresent && Input.GetMouseButton(0))
         {
+            // Para el ratón, obtenemos la dirección del objetivo a partir de la posición del cursor en pantalla
+            Ray camRay = cameraMain.ScreenPointToRay(Input.mousePosition);
+            RaycastHit groundHit;
 
-            Vector3 targetDirection = groundHit.point - transform.position;
-            targetDirection.y = 0f;
-
-            if(targetDirection != Vector3.zero)
+            if (Physics.Raycast(camRay, out groundHit, camRayLenght, pointerLayer))
             {
-                Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+                targetDirection = groundHit.point - transform.position;
+                targetDirection.y = 0f;
             }
-            //en caso de que impacter contra una superfice dentro de layer
-            // desplazo el punto pivote para la rotacion de las pistolas
-            //aimingPivot.position = new Vector3(groundHit.point.x,aimingPivot.position.y, groundHit.point.z);
+        }
+        else
+        {
+            // Para el uso de mando, obtenemos la dirección del objetivo a partir del joystick derecho
+            float horizontalAim = Input.GetAxis("RightStickHorizontal");
+            float verticalAim = Input.GetAxis("RightStickVertical");
 
-           
+            if (new Vector2(horizontalAim, verticalAim).sqrMagnitude > 0.01f)
+            {
+                // Si se está moviendo el joystick derecho, calculamos la dirección del objetivo
+                targetDirection = new Vector3(verticalAim, 0f, horizontalAim).normalized;
+
+                
+            }
+            
 
         }
+
+        // Rotamos el personaje hacia la dirección del objetivo
+        if (targetDirection != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        }
+                
+
     }
     #endregion
 }
