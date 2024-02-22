@@ -38,6 +38,15 @@ public class Projectile : PoolEntity
     {
         if ((shootableLayer & (1 << other.gameObject.layer)) != 0)
         {
+            IDamageable<float> damageable;
+
+            //tratamos de recueprar el componente IDamageable del objeto impactado
+            if(other.TryGetComponent<IDamageable<float>>(out damageable))
+            {
+                //si es posible recuperarlo, significara que el objeto es dañable
+                //por tanto, le aplico el daño correspondiente
+                damageable.TakeDamage(damage, transform.position);
+            }
             //invocamos el action informando de la posicion actual del proyectil en el momento de impactar
             onImpact?.Invoke(transform.position);
             ReturnPool();

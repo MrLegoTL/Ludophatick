@@ -287,7 +287,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.28451884, g: 1, b: 0, a: 1}
+      maxColor: {r: 1, g: 0.06707064, b: 0, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -4907,7 +4907,7 @@ GameObject:
   - component: {fileID: 5943276436717338708}
   - component: {fileID: 759375878739745488}
   m_Layer: 0
-  m_Name: Projectile
+  m_Name: BobProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5003,7 +5003,7 @@ MonoBehaviour:
   lifeTime: 5
   shootableLayer:
     serializedVersion: 2
-    m_Bits: 896
+    m_Bits: 448
 --- !u!1 &9032568579399853549
 GameObject:
   m_ObjectHideFlags: 0
@@ -5065,7 +5065,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2a97b17d255cfc54c8b03722d2683d7b, type: 2}
+  - {fileID: 2100000, guid: 13f7f941fd69280429d1ab2196dde415, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
