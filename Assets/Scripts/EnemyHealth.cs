@@ -18,6 +18,12 @@ public class EnemyHealth : MonoBehaviour , IDamageable<float>
     public static Action OnDead;
     //unity event para lanzar efectos al morir
     public UnityEvent OnDeadEvent;
+
+    //referencia al rigidbody
+    public Rigidbody rb;
+    //variable para controlar la fuerza de despedida
+    public float launchForce = 500f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -66,9 +72,22 @@ public class EnemyHealth : MonoBehaviour , IDamageable<float>
         OnDeadEvent?.Invoke();
         //ejecutamos la animacion de muerte
         animator.SetTrigger("Dead");
-        Debug.Log("Enemigo muerto");
+        Debug.Log("Enemigo muerto");      
+
         //llamada al action para los observadores suscritos
         OnDead?.Invoke();
+
+        Invoke("LaunchEnemy", 1f);
+    }
+
+    public void LaunchEnemy()
+    {
+        if (rb != null)
+        {
+            rb.isKinematic = false;
+            rb.useGravity = false;
+            rb.AddForce(Vector3.up * launchForce, ForceMode.Impulse);
+        }
     }
 
     /// <summary>

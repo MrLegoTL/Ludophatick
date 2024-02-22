@@ -17,18 +17,22 @@ public class BobEnemyMove : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        //si esta activo el navmesh agent y exite un objetivo
-        if(enemy.nav.enabled && enemy.target != null)
+        if(enemy.nav != null && enemy.nav.isActiveAndEnabled) 
         {
-            //indicamos que el destino es el objetivo del agent
-            enemy.nav.SetDestination(enemy.target.position);
+            //si esta activo el navmesh agent y exite un objetivo
+            if (enemy.nav.enabled && enemy.target != null)
+            {
+                //indicamos que el destino es el objetivo del agent
+                enemy.nav.SetDestination(enemy.target.position);
+            }
+            //verificamos is el enemigo se encuentra a la distancia de ataque
+            if (!enemy.nav.pathPending && enemy.nav.remainingDistance <= enemy.attackDistance)
+            {
+                //cambiamos al estado de ataque
+                animator.SetTrigger("Attack");
+            }
         }
-        //verificamos is el enemigo se encuentra a la distancia de ataque
-        if(!enemy.nav.pathPending && enemy.nav.remainingDistance <= enemy.attackDistance)
-        {
-            //cambiamos al estado de ataque
-            animator.SetTrigger("Attack");
-        }
+       
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
