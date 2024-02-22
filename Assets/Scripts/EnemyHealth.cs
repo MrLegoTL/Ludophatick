@@ -21,7 +21,7 @@ public class EnemyHealth : MonoBehaviour , IDamageable<float>
     // Start is called before the first frame update
     void Start()
     {
-        currentHealth = maxHealth;
+        Revive();
     }
 
     // Update is called once per frame
@@ -69,5 +69,18 @@ public class EnemyHealth : MonoBehaviour , IDamageable<float>
         Debug.Log("Enemigo muerto");
         //llamada al action para los observadores suscritos
         OnDead?.Invoke();
+    }
+
+    /// <summary>
+    /// Restaura la vida del enemigo
+    /// </summary>
+    public void Revive()
+    {
+        currentHealth = maxHealth;
+        //reseteamos el trigger para evitar que se reinicie
+        animator.ResetTrigger("Dead");
+        //forzamos al aniamciond de Move
+        animator.Play("Bob_Move");
+
     }
 }
