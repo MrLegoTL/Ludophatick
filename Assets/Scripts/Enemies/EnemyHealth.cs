@@ -99,7 +99,7 @@ public class EnemyHealth : MonoBehaviour , IDamageable<float>
         //reseteamos el trigger para evitar que se reinicie
         animator.ResetTrigger("Dead");
         //forzamos al aniamciond de Move
-        animator.Play("Bob_Move");
+        //animator.Play("Bob_Move");
 
     }
 }
