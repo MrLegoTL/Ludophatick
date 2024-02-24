@@ -413,7 +413,6 @@ GameObject:
   - component: {fileID: 197178970}
   - component: {fileID: 197178966}
   - component: {fileID: 197178971}
-  - component: {fileID: 197178973}
   m_Layer: 9
   m_Name: 'JellyEnemy '
   m_TagString: Untagged
@@ -638,9 +637,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 197178973}
-        m_TargetAssemblyTypeName: JellyDeath, Assembly-CSharp
-        m_MethodName: Initialized
+      - m_Target: {fileID: 197178971}
+        m_TargetAssemblyTypeName: EnemyHealth, Assembly-CSharp
+        m_MethodName: JellyDead
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -652,6 +651,8 @@ MonoBehaviour:
         m_CallState: 2
   rb: {fileID: 197178972}
   launchForce: 100
+  playerTransform: {fileID: 184918010}
+  jumpForce: 10
 --- !u!54 &197178972
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -679,49 +680,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &197178973
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 197178964}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d37c56dc008489e4585b4e53a7656fa5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 20
-  damageAreaRadius: 3
-  speed: 10
-  lifeTime: 5
-  shootableLayer:
-    serializedVersion: 2
-    m_Bits: 448
-  startPosition: {x: 0, y: 0, z: 0}
-  targetPosition: {x: 0, y: 0, z: 10}
-  shooterPosition: {x: 0, y: 0, z: 0}
-  onInitialize:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 197178973}
-        m_TargetAssemblyTypeName: JellyDeath, Assembly-CSharp
-        m_MethodName: LunchDead
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onImpact:
-    m_PersistentCalls:
-      m_Calls: []
-  onDeactivate:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1001 &203386926
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1012,7 +970,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 262601959}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.32055372, y: -0.00000002304943, z: 0.000000007800193, w: 0.9472304}
+  m_LocalRotation: {x: 0.32055372, y: 0.000000023049418, z: -0.000000007800191, w: 0.9472304}
   m_LocalPosition: {x: 1.37, y: 16.27, z: -26.61}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1967,6 +1925,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6483367790253014183, guid: 5ed6cc1aa9a62784dabcfda07d84f5a9, type: 3}
   m_PrefabInstance: {fileID: 503827390}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &505491980 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7790208654189427815, guid: 9e2f6cb54b85eff4791ba4bd875e7cfc, type: 3}
+  m_PrefabInstance: {fileID: 4882942201642011183}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3be36bf5fc8470a4585892e8375876b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &508671022 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3448257778665634975, guid: 0030d302b954c254a9f36b426e1a358a, type: 3}
@@ -4310,7 +4279,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.32055372, y: -0.00000002304943, z: 0.000000007800193, w: 0.9472304}
+  m_LocalRotation: {x: 0.32055372, y: 0.000000023049418, z: -0.000000007800191, w: 0.9472304}
   m_LocalPosition: {x: 1.37, y: 16.27, z: -26.61}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -15082,7 +15051,7 @@ Transform:
   m_GameObject: {fileID: 1355633691}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 1.81}
   m_LocalScale: {x: 3.3333335, y: 3.3333335, z: 3.3333335}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -27105,11 +27074,19 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7790208654189427815, guid: 9e2f6cb54b85eff4791ba4bd875e7cfc, type: 3}
+      propertyPath: playerTransform
+      value: 
+      objectReference: {fileID: 184918010}
+    - target: {fileID: 7790208654189427815, guid: 9e2f6cb54b85eff4791ba4bd875e7cfc, type: 3}
       propertyPath: OnDeadEvent.m_PersistentCalls.m_Calls.Array.size
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7790208654189427815, guid: 9e2f6cb54b85eff4791ba4bd875e7cfc, type: 3}
       propertyPath: OnDeadEvent.m_PersistentCalls.m_Calls.Array.data[3].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7790208654189427815, guid: 9e2f6cb54b85eff4791ba4bd875e7cfc, type: 3}
+      propertyPath: OnDeadEvent.m_PersistentCalls.m_Calls.Array.data[4].m_Mode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7790208654189427815, guid: 9e2f6cb54b85eff4791ba4bd875e7cfc, type: 3}
@@ -27117,7 +27094,15 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8577063175929038239}
     - target: {fileID: 7790208654189427815, guid: 9e2f6cb54b85eff4791ba4bd875e7cfc, type: 3}
+      propertyPath: OnDeadEvent.m_PersistentCalls.m_Calls.Array.data[4].m_Target
+      value: 
+      objectReference: {fileID: 505491980}
+    - target: {fileID: 7790208654189427815, guid: 9e2f6cb54b85eff4791ba4bd875e7cfc, type: 3}
       propertyPath: OnDeadEvent.m_PersistentCalls.m_Calls.Array.data[3].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7790208654189427815, guid: 9e2f6cb54b85eff4791ba4bd875e7cfc, type: 3}
+      propertyPath: OnDeadEvent.m_PersistentCalls.m_Calls.Array.data[4].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7790208654189427815, guid: 9e2f6cb54b85eff4791ba4bd875e7cfc, type: 3}
@@ -27125,11 +27110,23 @@ PrefabInstance:
       value: Play
       objectReference: {fileID: 0}
     - target: {fileID: 7790208654189427815, guid: 9e2f6cb54b85eff4791ba4bd875e7cfc, type: 3}
+      propertyPath: OnDeadEvent.m_PersistentCalls.m_Calls.Array.data[4].m_MethodName
+      value: LaunchEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 7790208654189427815, guid: 9e2f6cb54b85eff4791ba4bd875e7cfc, type: 3}
       propertyPath: OnDeadEvent.m_PersistentCalls.m_Calls.Array.data[3].m_TargetAssemblyTypeName
       value: UnityEngine.ParticleSystem, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7790208654189427815, guid: 9e2f6cb54b85eff4791ba4bd875e7cfc, type: 3}
+      propertyPath: OnDeadEvent.m_PersistentCalls.m_Calls.Array.data[4].m_TargetAssemblyTypeName
+      value: EnemyHealth, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7790208654189427815, guid: 9e2f6cb54b85eff4791ba4bd875e7cfc, type: 3}
       propertyPath: OnDeadEvent.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7790208654189427815, guid: 9e2f6cb54b85eff4791ba4bd875e7cfc, type: 3}
+      propertyPath: OnDeadEvent.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []

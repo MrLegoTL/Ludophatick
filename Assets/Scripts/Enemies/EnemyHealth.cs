@@ -5,6 +5,7 @@ using UnityEngine;
 using System;
 //para el uso de los unity events
 using UnityEngine.Events;
+using TMPro;
 
 public class EnemyHealth : MonoBehaviour , IDamageable<float>
 {
@@ -23,6 +24,11 @@ public class EnemyHealth : MonoBehaviour , IDamageable<float>
     public Rigidbody rb;
     //variable para controlar la fuerza de despedida
     public float launchForce = 500f;
+
+    [Header("JellyDead")]
+    public Transform playerTransform;
+    public float jumpForce = 10f;
+
 
     // Start is called before the first frame update
     void Start()
@@ -77,7 +83,7 @@ public class EnemyHealth : MonoBehaviour , IDamageable<float>
         //llamada al action para los observadores suscritos
         OnDead?.Invoke();
 
-        Invoke("LaunchEnemy", 1f);
+        //Invoke("LaunchEnemy", 1f);
     }
 
     public void LaunchEnemy()
@@ -102,4 +108,16 @@ public class EnemyHealth : MonoBehaviour , IDamageable<float>
         //animator.Play("Bob_Move");
 
     }
+
+    public void JellyDead()
+    {
+
+
+        Vector3 direction = (playerTransform.position - transform.position).normalized;
+        Vector3 jumpDirection = Vector3.up + direction;        
+        transform.rotation =  Quaternion.Euler(90f,transform.eulerAngles.y, transform.eulerAngles.z);
+        rb.isKinematic = false;
+        rb.AddForce(jumpDirection * jumpForce, ForceMode.Impulse);
+    }
+
 }

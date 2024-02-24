@@ -25,6 +25,12 @@ public class JellyDeath : MonoBehaviour
     //posicion del tirador
     public Vector3 shooterPosition;
 
+    public Transform shootingPoint;
+    public Transform targetPlayer;
+    //offset del puntos de impacto, para segurar que golpee el suelo correctamente
+    public Vector3 missileAimOffset = new Vector3(0f, -2f, 0f);
+
+
     //eventos de unity para los momentos clave del misil
     public UnityEvent onInitialize;
     public UnityEvent onImpact;
@@ -36,7 +42,9 @@ public class JellyDeath : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       
+        startPosition = shootingPoint.position;
+        targetPosition = targetPlayer.position + missileAimOffset;
+        shooterPosition = transform.position;
     }
 
     // Update is called once per frame
@@ -46,6 +54,7 @@ public class JellyDeath : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
+        Debug.Log("Ha impactado");
         //si el layer del objeto es impactado se encuentra dentro del layermask
         if((shootableLayer & (1<<collision.gameObject.layer)) != 0)
         {
@@ -76,13 +85,14 @@ public class JellyDeath : MonoBehaviour
 
     public void LunchDead()
     {
-        startPosition = transform.position;
+       
         //realizamos un Slerp para que realice una trayectoria curva
         // se resta la posicion del tirador, para hcer que no se hagan los calculos de posicion a nivel global
         //sino relativo a quien dispara
         transform.position = Vector3.Slerp(startPosition - shooterPosition,
                                             targetPosition - shooterPosition,
                                             1 - lifeCounter / lifeTime) + shooterPosition;
+
         lifeCounter -= Time.deltaTime;
     }
 
