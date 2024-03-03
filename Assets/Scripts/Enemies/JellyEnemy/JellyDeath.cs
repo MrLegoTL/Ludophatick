@@ -50,7 +50,7 @@ public class JellyDeath : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        LunchDead();
     }
     private void OnCollisionEnter(Collision collision)
     {
