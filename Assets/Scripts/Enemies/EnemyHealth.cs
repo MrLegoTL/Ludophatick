@@ -83,9 +83,13 @@ public class EnemyHealth : MonoBehaviour , IDamageable<float>
         //llamada al action para los observadores suscritos
         OnDead?.Invoke();
 
-        //Invoke("LaunchEnemy", 1f);
+        
     }
 
+    public void BobDeath()
+    {
+        Invoke("LaunchEnemy", 1f);
+    }
     public void LaunchEnemy()
     {
         if (rb != null)
