@@ -9,6 +9,7 @@ public class JellyDead : EnemyHealth
     [Header("JellyDead")]
     public Transform playerTransform;
     public float jumpForce = 10f;
+    
 
     [Header("Lunch")]
     //daño de impacto
@@ -19,6 +20,7 @@ public class JellyDead : EnemyHealth
     public float speed = 10;
     //layers contra los que podra impactar el misil
     public LayerMask shootableLayer;
+    public bool isLunch = false;
 
     public UnityEvent onImpact;
     //variable privada reutilizable, para identificar si el objeto impactado es dañable
@@ -27,6 +29,7 @@ public class JellyDead : EnemyHealth
     public void JellyDeath()
     {
         Invoke("JellyLunch", 1f);
+        Invoke("IsLunch", 2f);
     }
     public void JellyLunch()
     {
@@ -41,28 +44,71 @@ public class JellyDead : EnemyHealth
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Ha impactado");
-        //si el layer delobjeto impactado se encuentra desntro del layermask
-        if ((shootableLayer & (1 << other.gameObject.layer)) != 0)
+        if (isLunch)
         {
-            //recuperamos todos los objetos impactados dentro de los layer especificados
-            Collider[] impacts = Physics.OverlapSphere(transform.position, damageAreaRadius, shootableLayer);
-
-            //recorremos todos los objetos impactados
-            foreach (Collider i in impacts)
+            //si el layer delobjeto impactado se encuentra desntro del layermask
+            if ((shootableLayer & (1 << other.gameObject.layer)) != 0)
             {
-                //inicializamos la variale que almacenará el objeto dañable
-                damageable = null;
+                Debug.Log("Ha impactado");
+                //recuperamos todos los objetos impactados dentro de los layer especificados
+                Collider[] impacts = Physics.OverlapSphere(transform.position, damageAreaRadius, shootableLayer);
 
-                //tratamos de recuperar la interfaz dañable del objeto actual
-                if (i.TryGetComponent<IDamageable<float>>(out damageable))
+                //recorremos todos los objetos impactados
+                foreach (Collider i in impacts)
                 {
-                    //si la conseguimos recuperar, aplicamos el daño definido
-                    damageable.TakeDamage(damage, transform.position);
-                }
-            }
+                    //inicializamos la variale que almacenará el objeto dañable
+                    damageable = null;
 
-           
+                    //tratamos de recuperar la interfaz dañable del objeto actual
+                    if (i.TryGetComponent<IDamageable<float>>(out damageable))
+                    {
+                        //si la conseguimos recuperar, aplicamos el daño definido
+                        damageable.TakeDamage(damage, transform.position);
+                    }
+                }
+
+                //invocamos el unity event para realizar las acciones adicionales de impacto
+                onImpact?.Invoke();
+
+            }
         }
+    }
+    //private void OnCollisionEnter(Collision collision)
+    //{
+        
+    //    if (isLunch)
+    //    {
+    //        //si el layer delobjeto impactado se encuentra desntro del layermask
+    //        if ((shootableLayer & (1 << collision.gameObject.layer)) != 0)
+    //        {
+    //            Debug.Log("Ha impactado");
+    //            //recuperamos todos los objetos impactados dentro de los layer especificados
+    //            Collider[] impacts = Physics.OverlapSphere(transform.position, damageAreaRadius, shootableLayer);
+
+    //            //recorremos todos los objetos impactados
+    //            foreach (Collider i in impacts)
+    //            {
+    //                //inicializamos la variale que almacenará el objeto dañable
+    //                damageable = null;
+
+    //                //tratamos de recuperar la interfaz dañable del objeto actual
+    //                if (i.TryGetComponent<IDamageable<float>>(out damageable))
+    //                {
+    //                    //si la conseguimos recuperar, aplicamos el daño definido
+    //                    damageable.TakeDamage(damage, transform.position);
+    //                }
+    //            }
+
+    //            //invocamos el unity event para realizar las acciones adicionales de impacto
+    //            onImpact?.Invoke();
+
+    //        }
+    //    }
+       
+    //}
+
+    public void IsLunch()
+    {
+        isLunch = true;
     }
 }
