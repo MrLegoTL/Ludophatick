@@ -19,15 +19,12 @@ public class EnemyHealth : MonoBehaviour , IDamageable<float>
     public static Action OnDead;
     //unity event para lanzar efectos al morir
     public UnityEvent OnDeadEvent;
-
     //referencia al rigidbody
     public Rigidbody rb;
-    //variable para controlar la fuerza de despedida
-    public float launchForce = 500f;
 
-    [Header("JellyDead")]
-    public Transform playerTransform;
-    public float jumpForce = 10f;
+
+
+
 
 
     // Start is called before the first frame update
@@ -84,21 +81,7 @@ public class EnemyHealth : MonoBehaviour , IDamageable<float>
         OnDead?.Invoke();
 
         
-    }
-
-    public void BobDeath()
-    {
-        Invoke("LaunchEnemy", 1f);
-    }
-    public void LaunchEnemy()
-    {
-        if (rb != null)
-        {
-            rb.isKinematic = false;
-            rb.useGravity = false;
-            rb.AddForce(Vector3.up * launchForce, ForceMode.Impulse);
-        }
-    }
+    }   
 
     /// <summary>
     /// Restaura la vida del enemigo
@@ -113,15 +96,6 @@ public class EnemyHealth : MonoBehaviour , IDamageable<float>
 
     }
 
-    public void JellyDead()
-    {
-
-
-        Vector3 direction = (playerTransform.position - transform.position).normalized;
-        Vector3 jumpDirection = Vector3.up + direction;        
-        transform.rotation =  Quaternion.Euler(90f,transform.eulerAngles.y, transform.eulerAngles.z);
-        rb.isKinematic = false;
-        rb.AddForce(jumpDirection * jumpForce, ForceMode.Impulse);
-    }
+    
 
 }
