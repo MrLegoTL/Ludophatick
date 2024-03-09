@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 //PARA HACER USO DEL NAVMESH
 using UnityEngine.AI;
-
+using UnityEngine.Rendering;
 
 public class TankEnemyWalk : StateMachineBehaviour
 {
     private Enemy enemy;
+    private TankDeath tank;
+    //Distancia minima para realizar un ataque cercano
+    public float stompAttackDistance = 2f;
+    public bool shoot = true;
+
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -20,18 +25,29 @@ public class TankEnemyWalk : StateMachineBehaviour
     {
         if (enemy.nav != null && enemy.nav.isActiveAndEnabled)
         {
+            //float distanceToPlayer = Vector3.Distance(enemy.transform.position, enemy.target.position);
             //si esta activo el navmesh agent y exite un objetivo
             if (enemy.nav.enabled && enemy.target != null)
             {
                 //indicamos que el destino es el objetivo del agent
                 enemy.nav.SetDestination(enemy.target.position);
             }
+
             //verificamos is el enemigo se encuentra a la distancia de ataque
-            if (!enemy.nav.pathPending && enemy.nav.remainingDistance <= enemy.attackDistance)
+            if (!enemy.nav.pathPending && enemy.nav.remainingDistance <= enemy.attackDistance && enemy.enemyShoot)
             {
                 //cambiamos al estado de ataque
-                animator.SetTrigger("Attack");
+                animator.SetBool("Attack", true);
             }
+            if (!enemy.nav.pathPending && enemy.nav.remainingDistance <= enemy.attackDistance && !enemy.enemyShoot)
+            {
+                animator.SetBool("Attack", false);
+                //cambiamos al estado de ataque
+                animator.SetTrigger("Stomp");
+            }
+
+
+
         }
     }
 
@@ -39,7 +55,8 @@ public class TankEnemyWalk : StateMachineBehaviour
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         //reseteamos el trigger al salir del estado, para evitar que se dispare la animacion mas de una vez
-        animator.ResetTrigger("Attack");
+        //animator.ResetTrigger("Attack");
+        animator.ResetTrigger("Stomp");
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

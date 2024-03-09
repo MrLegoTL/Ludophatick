@@ -25,11 +25,20 @@ public class Enemy : PoolEntity
     public Transform shootingPoint;
     //velocidad de giro en estado de ataque
     public float enemyAttackTurnSpeed = 5;
+    public bool enemyShoot = true;
 
     public UnityEvent OnInitialize;
     public UnityEvent OnDeactivate;
 
-    
+    public static Enemy instance;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
