@@ -8,7 +8,6 @@ using UnityEngine.Rendering;
 public class TankEnemyWalk : StateMachineBehaviour
 {
     private Enemy enemy;
-    private TankDeath tank;
     //Distancia minima para realizar un ataque cercano
     public float stompAttackDistance = 2f;
     public bool shoot = true;
@@ -41,9 +40,15 @@ public class TankEnemyWalk : StateMachineBehaviour
             }
             if (!enemy.nav.pathPending && enemy.nav.remainingDistance <= enemy.attackDistance && !enemy.enemyShoot)
             {
+                
                 animator.SetBool("Attack", false);
                 //cambiamos al estado de ataque
                 animator.SetTrigger("Stomp");
+               
+            }
+            if (!enemy.enemyShoot)
+            {
+                animator.SetFloat("Speed", 2);
             }
 
 

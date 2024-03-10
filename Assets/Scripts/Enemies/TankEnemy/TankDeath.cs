@@ -7,13 +7,14 @@ public class TankDeath : EnemyHealth
 {
     //variable para controlar la fuerza de despedida
     public float launchForce = 500f;
-    public bool shoot = true;
+    public bool angryMode = false;
     //unity event para lanzar efectos al morir
     public UnityEvent OnAngryEvent;
 
     private void Update()
     {
-        TankAngry(); 
+        TankAngry();
+       
     }
 
     public void TankDead()
@@ -29,13 +30,20 @@ public class TankDeath : EnemyHealth
             rb.AddForce(Vector3.up * launchForce, ForceMode.Impulse);
         }
     }
-
+   
     public void TankAngry()
     {
-        if(currentHealth <= 30)
+        if (currentHealth <= 30 && !angryMode)
         {
             Enemy.instance.enemyShoot = false;
             OnAngryEvent?.Invoke();
+            angryMode = true;
+            
+
         }
+       
+        
     }
 }
+
+   
