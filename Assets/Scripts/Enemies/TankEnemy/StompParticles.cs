@@ -9,10 +9,18 @@ public class StompParticles : MonoBehaviour
     public ParticleSystem particle;
     //unity event para lanzar efectos al morir
     public UnityEvent OnStompEvent;
+    public UnityEvent OnAfterStompEvent;
 
     public void ActivateParticles()
     {
         OnStompEvent?.Invoke();
+
     }
+
+    public void Deactivate()
+    {
+        OnAfterStompEvent?.Invoke();
+    }
+
   
 }
