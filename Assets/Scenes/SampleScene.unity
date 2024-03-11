@@ -548,7 +548,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 184918008}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fd6058d40c43032419fb20e889c5ab6c, type: 3}
   m_Name: 
@@ -6402,6 +6402,10 @@ PrefabInstance:
       propertyPath: playerTransform
       value: 
       objectReference: {fileID: 184918010}
+    - target: {fileID: 1157030695810044582, guid: f38693a84de779945960d0fde0f502e4, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 184918012}
     - target: {fileID: 2869721279907680032, guid: f38693a84de779945960d0fde0f502e4, type: 3}
       propertyPath: m_Name
       value: 'JellyEnemy '
@@ -6945,10 +6949,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: 'TankEnemy '
       objectReference: {fileID: 0}
-    - target: {fileID: 3624648258968247047, guid: 03f49e02c886b36479b4873a78592c71, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5416188591647030235, guid: 03f49e02c886b36479b4873a78592c71, type: 3}
       propertyPath: m_LocalPosition.x
       value: 8.95
@@ -6989,6 +6989,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8310841658896573197, guid: 03f49e02c886b36479b4873a78592c71, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 184918012}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
