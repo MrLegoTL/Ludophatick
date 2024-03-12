@@ -4,9 +4,20 @@ using UnityEngine;
 
 public class ChangeToSphere : MonoBehaviour
 {
-    public SkinnedMeshRenderer rollMeshRenderer;
+    //public SkinnedMeshRenderer rollMeshRenderer;
+    public GameObject Player;
+    public GameObject rollPlayer;
+    [ContextMenu("Test")]
     public void ChangeRoll()
     {
-        rollMeshRenderer.SetBlendShapeWeight(0, 100);
+        Player.SetActive(false);
+        rollPlayer.SetActive(true);
+        //rollMeshRenderer.SetBlendShapeWeight(0, 100);
+    }
+
+    public void EndRoll()
+    {
+        Player.SetActive(true);
+        rollPlayer.SetActive(false);
     }
 }

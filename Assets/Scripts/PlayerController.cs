@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Rendering;
 
 public class PlayerController : MonoBehaviour
 {
@@ -69,15 +70,18 @@ public class PlayerController : MonoBehaviour
 
     [Header("Roll")]
     public float rollDistance = 5f;
-    public float rollSpeed = 10f;
-    private bool isRolling = false;
+    public float rollDuration = 0.5f;
+    private bool isRolling;
     private Vector3 rollDirection;
-    public GameObject Player;
-    public GameObject rollPlayer;
-    public UnityEvent OnStartRoll;
-    public UnityEvent OnEndRoll;
 
-    
+    [Header("Dash")]
+    public float dashDistance = 5f; // Distancia que recorrerá el dash
+    public float dashSpeed = 10f; // Velocidad del dash
+
+    private bool isDashing = false; // Variable para controlar si el personaje está realizando un dash
+    private Vector3 dashDirection; // Dirección del dash
+
+
 
 
     [Header("Animator")]
@@ -141,8 +145,13 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetButtonDown("Roll") && !isRolling)
         {
-            Roll();
+            OnRoll();
         }
+        if (Input.GetButtonDown("Dash") && !isDashing)
+        {
+            StartDash();
+        }
+
     }
 
     /// <summary>
@@ -150,6 +159,8 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void Movement()
     {
+       
+
         //componemos el vector de direccion deseado a partir del input
         direction.Set(horizontal,0f,vertical);
         //para asegurarnos que las diagonales no tienen una maagnitud superior a 1, "Clampeamos" su valor
@@ -166,7 +177,7 @@ public class PlayerController : MonoBehaviour
 
         if (walled) desiredVelocity = Vector3.zero;
 
-        if ((horizontal!=0 || vertical != 0) && grounded && !walled)
+        if ((horizontal!=0 || vertical != 0) && grounded && !walled )
         {
             //aplicamos la velocidad deseada , aumentando frame a frame en base a la aceleracion
             rb.velocity = Vector3.MoveTowards(rb.velocity, desiredVelocity, Time.deltaTime * acceleration);
@@ -185,7 +196,7 @@ public class PlayerController : MonoBehaviour
             isMoving = true;
         }
         //En caso de no existir input, paramos la rotacion del tanque
-        if ((horizontal == 0 && vertical == 0) || walled)
+        if ((horizontal == 0 && vertical == 0) || walled )
         {
             rb.angularVelocity = Vector3.zero;
             isMoving = false;
@@ -332,50 +343,80 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    private void Roll()
+    private void StartDash()
     {
-        Vector3 mousePositioon = Input.mousePosition;
-        Ray camRay = Camera.main.ScreenPointToRay(mousePositioon);
+        // Determinar la dirección del dash basada en la posición del ratón
+        Vector3 mousePosition = Input.mousePosition;
+        Ray camRay = Camera.main.ScreenPointToRay(mousePosition);
         RaycastHit groundHit;
-
-        if(Physics.Raycast(camRay, out groundHit, Mathf.Infinity))
+        if (Physics.Raycast(camRay, out groundHit, Mathf.Infinity))
         {
-            rollDirection = (groundHit.point - transform.position).normalized;
+            dashDirection = (groundHit.point - transform.position).normalized;
         }
         else
         {
-            rollDirection = transform.forward;
+            dashDirection = transform.forward;
         }
 
-        StartCoroutine(PerformRoll());
-
+        // Activar el dash
+        StartCoroutine(PerformDash());
     }
 
-    private IEnumerator PerformRoll()
+    private IEnumerator PerformDash()
     {
-        OnStartRoll?.Invoke();
-        isRolling = true;
+        isDashing = true; // Marcar que el personaje está en medio de un dash
 
-        //Player.SetActive(false);
-        //rollPlayer.SetActive(true);
-        
-        Vector3 rollDestination = transform.position + rollDirection.normalized * rollDistance;
+        // Calcular la posición final del dash
+        Vector3 dashDestination = transform.position + dashDirection * dashDistance;
 
+        // Reproducir la animación de dash
         anim.SetTrigger("Roll");
 
-        while(Vector3.Distance(transform.position, rollDestination) > 0.1f)
+        // Mover el personaje hacia adelante en la dirección del dash
+        while (Vector3.Distance(transform.position, dashDestination) > 0.1f)
         {
-            transform.position += rollDirection.normalized * rollSpeed * Time.deltaTime;
+            transform.position += dashDirection * dashSpeed * Time.deltaTime;
+            // Si el personaje está lo suficientemente cerca de la posición de destino, establece su posición en la posición de destino
+            if (Vector3.Distance(transform.position, dashDestination) < 0.1f)
+            {
+                transform.position = dashDestination;
+            }
+
             yield return null;
         }
-        
-        //Player.SetActive(true);
-        //rollPlayer.SetActive(false);
-
-        isRolling = false;
-        OnEndRoll?.Invoke();
+        rb.velocity = Vector3.zero;
+        isDashing = false; // Marcar que el dash ha terminado
     }
 
-    
+
+private void OnRoll()
+    {
+        rollDirection = transform.forward;
+        
+        StartCoroutine(Roll());
+    }
+
+    private IEnumerator Roll()
+    {
+        isRolling = true;
+
+        Vector3 startPosition = transform.position;
+         
+        Vector3 endPosition = startPosition + rollDirection * rollDistance;
+        // Reproducir la animación de dash
+        anim.SetTrigger("Roll");
+        float startTime = Time.time;
+        while(Time.time < startTime + rollDuration)
+        {
+            float normalizedTime = (Time.time - startTime) / rollDuration;
+            transform.position =  Vector3.Lerp(startPosition, endPosition, normalizedTime);
+            yield return null;
+        }
+
+        transform.position = endPosition;
+
+        isRolling = false;
+    }
+
     #endregion
 }
