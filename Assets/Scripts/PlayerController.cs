@@ -59,6 +59,8 @@ public class PlayerController : MonoBehaviour
     public LayerMask pointerLayer;
     //transform usado como objetivo para la rotacion
     public Transform aimingPivot;
+    //transform usado visualmente como objetivo de rotacion
+    //public Transform visualAimingPivot;
     //para almacenar la referencia de la camara principal
    public Camera cameraMain;
     // Almacena la última dirección de mira
@@ -276,37 +278,32 @@ public class PlayerController : MonoBehaviour
     {
 
         // Definimos la dirección del objetivo
-        Vector3 targetDirection=Vector3.zero;
+        Vector3 targetDirection = Vector3.zero;
 
-        // Verificamos si se está utilizando un ratón o un mando de Xbox
-        if (Input.mousePresent && Input.GetMouseButton(0))
+        Vector3 mousePosition = Input.mousePosition;
+
+        // Para el ratón, obtenemos la dirección del objetivo a partir de la posición del cursor en pantalla
+        Ray camRay = cameraMain.ScreenPointToRay(mousePosition);
+        RaycastHit groundHit;
+
+        if (Physics.Raycast(camRay, out groundHit, camRayLenght, pointerLayer))
         {
-            // Para el ratón, obtenemos la dirección del objetivo a partir de la posición del cursor en pantalla
-            Ray camRay = cameraMain.ScreenPointToRay(Input.mousePosition);
-            RaycastHit groundHit;
-
-            if (Physics.Raycast(camRay, out groundHit, camRayLenght, pointerLayer))
-            {
-                targetDirection = groundHit.point - transform.position;
-                targetDirection.y = 0f;
-            }
+            targetDirection = groundHit.point - transform.position;
+            targetDirection.y = 0f;
         }
-        else
+
+        // Para el uso de mando, obtenemos la dirección del objetivo a partir del joystick derecho
+        float horizontalAim = Input.GetAxis("RightStickHorizontal");
+        float verticalAim = Input.GetAxis("RightStickVertical");
+
+        if (new Vector2(horizontalAim, verticalAim).sqrMagnitude > 0.01f)
         {
-            // Para el uso de mando, obtenemos la dirección del objetivo a partir del joystick derecho
-            float horizontalAim = Input.GetAxis("RightStickHorizontal");
-            float verticalAim = Input.GetAxis("RightStickVertical");
+            // Si se está moviendo el joystick derecho, calculamos la dirección del objetivo
+            targetDirection = new Vector3(verticalAim, 0f, horizontalAim).normalized;
 
-            if (new Vector2(horizontalAim, verticalAim).sqrMagnitude > 0.01f)
-            {
-                // Si se está moviendo el joystick derecho, calculamos la dirección del objetivo
-                targetDirection = new Vector3(verticalAim, 0f, horizontalAim).normalized;
-
-                
-            }
-            
 
         }
+
 
         // Rotamos el personaje hacia la dirección del objetivo
         if (targetDirection != Vector3.zero)
@@ -314,7 +311,47 @@ public class PlayerController : MonoBehaviour
             Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
-                
+
+        //// Definimos la dirección del objetivo
+        //Vector3 targetDirection=Vector3.zero;
+
+        //// Verificamos si se está utilizando un ratón o un mando de Xbox
+        //if (Input.mousePresent && Input.GetMouseButton(0))
+        //{
+        //    // Para el ratón, obtenemos la dirección del objetivo a partir de la posición del cursor en pantalla
+        //    Ray camRay = cameraMain.ScreenPointToRay(Input.mousePosition);
+        //    RaycastHit groundHit;
+
+        //    if (Physics.Raycast(camRay, out groundHit, camRayLenght, pointerLayer))
+        //    {
+        //        targetDirection = groundHit.point - transform.position;
+        //        targetDirection.y = 0f;
+        //    }
+        //}
+        //else
+        //{
+        //    // Para el uso de mando, obtenemos la dirección del objetivo a partir del joystick derecho
+        //    float horizontalAim = Input.GetAxis("RightStickHorizontal");
+        //    float verticalAim = Input.GetAxis("RightStickVertical");
+
+        //    if (new Vector2(horizontalAim, verticalAim).sqrMagnitude > 0.01f)
+        //    {
+        //        // Si se está moviendo el joystick derecho, calculamos la dirección del objetivo
+        //        targetDirection = new Vector3(verticalAim, 0f, horizontalAim).normalized;
+
+
+        //    }
+
+
+        //}
+
+        //// Rotamos el personaje hacia la dirección del objetivo
+        //if (targetDirection != Vector3.zero)
+        //{
+        //    Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+        //    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        //}
+
 
     }
     #endregion
