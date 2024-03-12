@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerController : MonoBehaviour
 {
@@ -66,6 +67,18 @@ public class PlayerController : MonoBehaviour
     // Almacena la última dirección de mira
     private Vector3 lastAimDirection;
 
+    [Header("Roll")]
+    public float rollDistance = 5f;
+    public float rollSpeed = 10f;
+    private bool isRolling = false;
+    private Vector3 rollDirection;
+    public GameObject Player;
+    public GameObject rollPlayer;
+    public UnityEvent OnStartRoll;
+    public UnityEvent OnEndRoll;
+
+    
+
 
     [Header("Animator")]
     public Animator anim;
@@ -125,6 +138,10 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButton("Fire1"))
         {
             Shoot();
+        }
+        if (Input.GetButtonDown("Roll") && !isRolling)
+        {
+            Roll();
         }
     }
 
@@ -311,48 +328,54 @@ public class PlayerController : MonoBehaviour
             Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
-
-        //// Definimos la dirección del objetivo
-        //Vector3 targetDirection=Vector3.zero;
-
-        //// Verificamos si se está utilizando un ratón o un mando de Xbox
-        //if (Input.mousePresent && Input.GetMouseButton(0))
-        //{
-        //    // Para el ratón, obtenemos la dirección del objetivo a partir de la posición del cursor en pantalla
-        //    Ray camRay = cameraMain.ScreenPointToRay(Input.mousePosition);
-        //    RaycastHit groundHit;
-
-        //    if (Physics.Raycast(camRay, out groundHit, camRayLenght, pointerLayer))
-        //    {
-        //        targetDirection = groundHit.point - transform.position;
-        //        targetDirection.y = 0f;
-        //    }
-        //}
-        //else
-        //{
-        //    // Para el uso de mando, obtenemos la dirección del objetivo a partir del joystick derecho
-        //    float horizontalAim = Input.GetAxis("RightStickHorizontal");
-        //    float verticalAim = Input.GetAxis("RightStickVertical");
-
-        //    if (new Vector2(horizontalAim, verticalAim).sqrMagnitude > 0.01f)
-        //    {
-        //        // Si se está moviendo el joystick derecho, calculamos la dirección del objetivo
-        //        targetDirection = new Vector3(verticalAim, 0f, horizontalAim).normalized;
-
-
-        //    }
-
-
-        //}
-
-        //// Rotamos el personaje hacia la dirección del objetivo
-        //if (targetDirection != Vector3.zero)
-        //{
-        //    Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
-        //    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-        //}
-
+               
 
     }
+
+    private void Roll()
+    {
+        Vector3 mousePositioon = Input.mousePosition;
+        Ray camRay = Camera.main.ScreenPointToRay(mousePositioon);
+        RaycastHit groundHit;
+
+        if(Physics.Raycast(camRay, out groundHit, Mathf.Infinity))
+        {
+            rollDirection = (groundHit.point - transform.position).normalized;
+        }
+        else
+        {
+            rollDirection = transform.forward;
+        }
+
+        StartCoroutine(PerformRoll());
+
+    }
+
+    private IEnumerator PerformRoll()
+    {
+        OnStartRoll?.Invoke();
+        isRolling = true;
+
+        //Player.SetActive(false);
+        //rollPlayer.SetActive(true);
+        
+        Vector3 rollDestination = transform.position + rollDirection.normalized * rollDistance;
+
+        anim.SetTrigger("Roll");
+
+        while(Vector3.Distance(transform.position, rollDestination) > 0.1f)
+        {
+            transform.position += rollDirection.normalized * rollSpeed * Time.deltaTime;
+            yield return null;
+        }
+        
+        //Player.SetActive(true);
+        //rollPlayer.SetActive(false);
+
+        isRolling = false;
+        OnEndRoll?.Invoke();
+    }
+
+    
     #endregion
 }
