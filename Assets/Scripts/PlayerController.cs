@@ -47,12 +47,20 @@ public class PlayerController : MonoBehaviour
     public float shootDelay = 0.5f;
     private float shootTime = 0f;
     private bool leftGun = true;
+    public bool canShoot = true;
     public Transform gunLeft;
     public Transform gunRight;
     //id de la pool de la cual recuperar los proyectiles
     public string bulletType = "RegularBullets";
     //variable para la distancia minima del disparo
     public float minShootDistance = 1f;
+
+    [Header("Laser")]
+    // Agrega esta variable para asignar el rayo láser desde el editor de Unity
+    public LaserBeam laserPrefab;
+    // Agrega esta variable para controlar el retraso entre disparos del láser
+    public float laserDelay = 1.0f;
+    private float laserTime = 0.0f;
 
     [Header("Aiming")]
     //longitud del raycas a realizar
@@ -73,13 +81,9 @@ public class PlayerController : MonoBehaviour
     public float rollDuration = 0.5f;
     private bool isRolling;
     private Vector3 rollDirection;
+    public float rollCooldown = 3f;
 
-    [Header("Dash")]
-    public float dashDistance = 5f; // Distancia que recorrerá el dash
-    public float dashSpeed = 10f; // Velocidad del dash
-
-    private bool isDashing = false; // Variable para controlar si el personaje está realizando un dash
-    private Vector3 dashDirection; // Dirección del dash
+    
 
 
 
@@ -139,18 +143,19 @@ public class PlayerController : MonoBehaviour
         {
             Jump();
         }
-        if (Input.GetButton("Fire1"))
+        if (Input.GetButton("Fire1") && canShoot)
         {
             Shoot();
+        }
+        if (Time.time >= laserTime && Input.GetButtonDown("Fire2"))
+        {
+            ShootLaser();
         }
         if (Input.GetButtonDown("Roll") && !isRolling)
         {
             OnRoll();
         }
-        if (Input.GetButtonDown("Dash") && !isDashing)
-        {
-            StartDash();
-        }
+       
 
     }
 
@@ -341,52 +346,7 @@ public class PlayerController : MonoBehaviour
         }
                
 
-    }
-
-    private void StartDash()
-    {
-        // Determinar la dirección del dash basada en la posición del ratón
-        Vector3 mousePosition = Input.mousePosition;
-        Ray camRay = Camera.main.ScreenPointToRay(mousePosition);
-        RaycastHit groundHit;
-        if (Physics.Raycast(camRay, out groundHit, Mathf.Infinity))
-        {
-            dashDirection = (groundHit.point - transform.position).normalized;
-        }
-        else
-        {
-            dashDirection = transform.forward;
-        }
-
-        // Activar el dash
-        StartCoroutine(PerformDash());
-    }
-
-    private IEnumerator PerformDash()
-    {
-        isDashing = true; // Marcar que el personaje está en medio de un dash
-
-        // Calcular la posición final del dash
-        Vector3 dashDestination = transform.position + dashDirection * dashDistance;
-
-        // Reproducir la animación de dash
-        anim.SetTrigger("Roll");
-
-        // Mover el personaje hacia adelante en la dirección del dash
-        while (Vector3.Distance(transform.position, dashDestination) > 0.1f)
-        {
-            transform.position += dashDirection * dashSpeed * Time.deltaTime;
-            // Si el personaje está lo suficientemente cerca de la posición de destino, establece su posición en la posición de destino
-            if (Vector3.Distance(transform.position, dashDestination) < 0.1f)
-            {
-                transform.position = dashDestination;
-            }
-
-            yield return null;
-        }
-        rb.velocity = Vector3.zero;
-        isDashing = false; // Marcar que el dash ha terminado
-    }
+    }  
 
 
 private void OnRoll()
@@ -399,7 +359,7 @@ private void OnRoll()
     private IEnumerator Roll()
     {
         isRolling = true;
-
+        canShoot = false;
         Vector3 startPosition = transform.position;
          
         Vector3 endPosition = startPosition + rollDirection * rollDistance;
@@ -414,9 +374,22 @@ private void OnRoll()
         }
 
         transform.position = endPosition;
-
+        canShoot = true;
+        yield return new WaitForSeconds(rollCooldown);
         isRolling = false;
+       
     }
+
+    void ShootLaser()
+    {
+        // Crea una instancia del láser
+        LaserBeam laser = Instantiate(laserPrefab, transform.position, transform.rotation);
+        laser.Initialize();
+
+        // Configura el retraso antes de poder disparar el láser de nuevo
+        laserTime = Time.time + laserDelay;
+    }
+
 
     #endregion
 }
