@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 public class LaserBeam : PoolEntity
 {
+    //public GameObject firePoint;
 
     [Header("Components")]
     public LineRenderer lineRenderer;
@@ -18,11 +19,14 @@ public class LaserBeam : PoolEntity
     // Duración del láser antes de desaparecer
     public float laserDuration = 1.0f;
     // Tiempo en el que se activó el láser
-    private float startTime;
+    public float startTime;
+
+   
 
     // Acción que informará sobre la posición de impacto
     public Action<Vector3> onImpact;
 
+    
     // Update is called once per frame
     void Update()
     {
@@ -33,6 +37,8 @@ public class LaserBeam : PoolEntity
         {
             Deactivate();
         }
+        
+        
     }
 
     private void UpdateLaser()
@@ -66,6 +72,11 @@ public class LaserBeam : PoolEntity
             // Si el rayo láser no golpea nada, lo extendemos hasta su longitud máxima
             lineRenderer.SetPosition(1, ray.GetPoint(maxLength));
         }
+
+        
+        
+            transform.position = PlayerController.instance.shootingLaserPoint.transform.position;
+        
     }
 
     public override void Initialize()

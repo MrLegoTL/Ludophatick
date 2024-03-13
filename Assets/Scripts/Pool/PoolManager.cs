@@ -12,19 +12,19 @@ public class PoolManager : MonoBehaviour
 
     private void Awake()
     {
-        if (!instance) instance = this; 
+        if (!instance) instance = this;
 
     }
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     /// <summary>
@@ -121,5 +121,25 @@ public class PoolManager : MonoBehaviour
 
         return entity;
 
+
+    }
+
+    public void UpdatePulledObject(string poolID, Vector3 position, Quaternion rotation)
+    {
+        // Buscamos el pool que tenga el ID indicado
+        Pool pool = pools.Where(a => a.id == poolID).FirstOrDefault();
+        // Si existe la pool
+        if (pool != null)
+        {
+            // Obtenemos el último entity extraído de la pool
+            PoolEntity entity = pool.pool.LastOrDefault();
+            // Si encontramos un entity
+            if (entity != null)
+            {
+                // Actualizamos su posición y rotación
+                entity.transform.position = position;
+                entity.transform.rotation = rotation;
+            }
+        }
     }
 }

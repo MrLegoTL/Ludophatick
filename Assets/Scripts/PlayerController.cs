@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering;
+using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
@@ -57,10 +58,12 @@ public class PlayerController : MonoBehaviour
 
     [Header("Laser")]
     // Agrega esta variable para asignar el rayo láser desde el editor de Unity
-    public LaserBeam laserPrefab;
+   // public LaserBeam laserPrefab;
     // Agrega esta variable para controlar el retraso entre disparos del láser
     public float laserDelay = 1.0f;
-    private float laserTime = 0.0f;
+    public float laserTime = 0.0f;
+    public string laserAttack = "LaserBeam";
+    public Transform shootingLaserPoint;
 
     [Header("Aiming")]
     //longitud del raycas a realizar
@@ -81,10 +84,7 @@ public class PlayerController : MonoBehaviour
     public float rollDuration = 0.5f;
     private bool isRolling;
     private Vector3 rollDirection;
-    public float rollCooldown = 3f;
-
-    
-
+    public float rollCooldown = 3f; 
 
 
 
@@ -94,9 +94,19 @@ public class PlayerController : MonoBehaviour
     //solo vamos a comprobar si es mayor que 0, asin que no necesitamos mas capacidad
     Collider[] colliderBuffer = new Collider[1];
 
+    public static PlayerController instance;
+
     #endregion
     #region EVENTS
 
+
+    private void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -112,6 +122,13 @@ public class PlayerController : MonoBehaviour
         Movement();
         AnimatorFeed();
         AimingBehaviour();
+
+        // Si el láser está activo, actualiza su posición y rotación para que coincida con el jugador
+        if (Time.time < laserTime)
+        {
+            Vector3 laserDirection = transform.forward;
+            PoolManager.instance.UpdatePulledObject(laserAttack, shootingLaserPoint.position, Quaternion.LookRotation(laserDirection));
+        }
     }
 
 
@@ -382,14 +399,16 @@ private void OnRoll()
 
     void ShootLaser()
     {
-        // Crea una instancia del láser
-        LaserBeam laser = Instantiate(laserPrefab, transform.position, transform.rotation);
-        laser.Initialize();
+        Vector3 laserDirection = transform.forward;
+        //// Crea una instancia del láser
+        //LaserBeam laser = Instantiate(laserPrefab, transform.position, Quaternion.LookRotation(laserDirection));
+        PoolManager.instance.Pull(laserAttack, shootingLaserPoint.position, Quaternion.LookRotation(laserDirection));
+        
 
         // Configura el retraso antes de poder disparar el láser de nuevo
         laserTime = Time.time + laserDelay;
     }
 
-
+   
     #endregion
 }

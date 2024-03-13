@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 631617559082783722}
   - component: {fileID: 2057326053598522914}
   m_Layer: 6
-  m_Name: LaserBeam
+  m_Name: LaserBeam 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -54,7 +54,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2a97b17d255cfc54c8b03722d2683d7b, type: 2}
+  - {fileID: 2100000, guid: 13f7f941fd69280429d1ab2196dde415, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -98,7 +98,7 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.3663218, g: 1, b: 0, a: 1}
+      key0: {r: 1, g: 0.08050732, b: 0, a: 1}
       key1: {r: 0.33973622, g: 1, b: 0, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -123,7 +123,7 @@ LineRenderer:
       atime6: 0
       atime7: 0
       m_Mode: 0
-      m_ColorSpace: -1
+      m_ColorSpace: 0
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0
