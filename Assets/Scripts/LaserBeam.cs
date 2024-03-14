@@ -21,12 +21,10 @@ public class LaserBeam : PoolEntity
     // Tiempo en el que se activó el láser
     public float startTime;
 
-   
-
     // Acción que informará sobre la posición de impacto
     public Action<Vector3> onImpact;
 
-    
+
     // Update is called once per frame
     void Update()
     {
@@ -37,8 +35,8 @@ public class LaserBeam : PoolEntity
         {
             Deactivate();
         }
-        
-        
+
+
     }
 
     private void UpdateLaser()
@@ -73,10 +71,11 @@ public class LaserBeam : PoolEntity
             lineRenderer.SetPosition(1, ray.GetPoint(maxLength));
         }
 
-        
-        
-            transform.position = PlayerController.instance.shootingLaserPoint.transform.position;
-        
+
+
+        transform.position = PlayerController.instance.shootingLaserPoint.transform.position;
+        transform.forward = PlayerController.instance.transform.forward;
+
     }
 
     public override void Initialize()
@@ -93,7 +92,7 @@ public class LaserBeam : PoolEntity
     public override void Deactivate()
     {
         base.Deactivate();
-
+        gameObject.SetActive(false);
         // Deshabilitamos el line renderer
         lineRenderer.enabled = false;
     }
