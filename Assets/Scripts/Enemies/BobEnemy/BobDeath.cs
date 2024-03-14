@@ -7,8 +7,9 @@ public class BobDeath : EnemyHealth
 
     
     //variable para controlar la fuerza de despedida
-    public float launchForce = 500f;       
+    public float launchForce = 500f;
 
+    
     public void BobDead()
     {
         Invoke("LaunchEnemy", 1f);

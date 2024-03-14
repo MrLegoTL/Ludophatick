@@ -154,7 +154,7 @@ MonoBehaviour:
   - {fileID: 631617559082783722}
   active: 0
   lineRenderer: {fileID: 631617559082783722}
-  damage: 0.1
+  damage: 10
   maxLength: 100
   shootableLayer:
     serializedVersion: 2
