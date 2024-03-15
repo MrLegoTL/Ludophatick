@@ -71,11 +71,12 @@ public class PlayerController : MonoBehaviour
     //layer que podras ser "tocado" con el cursor del raton
     public LayerMask pointerLayer;
     //transform usado como objetivo para la rotacion
-    public Transform aimingPivot;
+    public Transform aimingPivotLeft;
+    public Transform aimingPivotRight;
     //transform usado visualmente como objetivo de rotacion
     //public Transform visualAimingPivot;
     //para almacenar la referencia de la camara principal
-   public Camera cameraMain;
+    public Camera cameraMain;
     // Almacena la última dirección de mira
     private Vector3 lastAimDirection;
 
@@ -302,17 +303,18 @@ public class PlayerController : MonoBehaviour
         // Definimos el cañón desde el cual disparar y la posición de disparo
         Transform gun = leftGun ? gunLeft : gunRight;
         Vector3 shootPosition = gun.position;
-        Vector3 shootDirection = (aimingPivot.position - shootPosition).normalized;
+        Vector3 shootDirectionRight = (aimingPivotRight.position - shootPosition).normalized;
+        Vector3 shootDirectionLeft = (aimingPivotLeft.position - shootPosition).normalized;
         if (leftGun)
         {
             anim.SetTrigger("Shoot Left");
             //solicitamos a la pool activar un proyectil en el cañon izquierdo
-            PoolManager.instance.Pull(bulletType, gun.position, Quaternion.LookRotation(shootDirection));
+            PoolManager.instance.Pull(bulletType, gun.position, Quaternion.LookRotation(shootDirectionLeft));
         }
         else
         {
             anim.SetTrigger("Shoot Right");
-            PoolManager.instance.Pull(bulletType, gun.position, Quaternion.LookRotation(shootDirection));
+            PoolManager.instance.Pull(bulletType, gun.position, Quaternion.LookRotation(shootDirectionRight));
         }
 
         shootTime = Time.time + shootDelay;
