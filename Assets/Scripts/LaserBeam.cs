@@ -21,11 +21,13 @@ public class LaserBeam : PoolEntity
     // Tiempo en el que se activó el láser
     public float startTime;
     public ParticleSystem impact;
-    
-    
+    public ParticleSystem laserImpact;
+
+
 
     // Acción que informará sobre la posición de impacto
     public Action<Vector3> onImpact;
+    public Action<Vector3> onImpactEnemy;
     //action que se invocara cuando se inicialice el proyectil
     public Action onInitialize;
 
@@ -66,6 +68,7 @@ public class LaserBeam : PoolEntity
             {
                 // Aplicamos daño al objeto
                 damageable.TakeDamage(damage, hit.point);
+                onImpactEnemy?.Invoke(transform.position);
             }
 
             // Invocamos la acción de impacto informando sobre la posición de impacto
@@ -74,6 +77,10 @@ public class LaserBeam : PoolEntity
             if(impact != null)
             {
                 impact.transform.position = hit.point;
+            }
+            if(laserImpact != null)
+            {
+                laserImpact.transform.position = hit.point;
             }
             
             

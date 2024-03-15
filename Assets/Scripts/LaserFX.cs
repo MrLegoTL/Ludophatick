@@ -7,6 +7,7 @@ public class LaserFX : MonoBehaviour
 {
     //creamos un evento de unity que recibira un vector 3 como parametro
     public UnityEvent<Vector3> onImpact;
+    public UnityEvent<Vector3> onImpactEnemy;
     //evento de unity para cuando el proyectil sea inicializado
     public UnityEvent onInitialize;
     //proyectil al que suscribiremos lo eventos
@@ -17,13 +18,14 @@ public class LaserFX : MonoBehaviour
         //nos sucribimos al action de impacto con el invoke del unity event
         //ambos coinciden con el parametro requerido de  vector 3
         laser.onImpact += onImpact.Invoke;
-        
+        laser.onImpactEnemy += onImpactEnemy.Invoke;
         laser.onInitialize += onInitialize.Invoke;
     }
 
     private void OnDestroy()
     {
         laser.onImpact -= onImpact.Invoke;
+        laser.onImpactEnemy -= onImpactEnemy.Invoke;
         laser.onInitialize -= onInitialize.Invoke;
     }
 }
