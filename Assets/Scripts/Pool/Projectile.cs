@@ -24,6 +24,7 @@ public class Projectile : PoolEntity
 
     //action que informara de la posicion de impacto
     public Action<Vector3> onImpact;
+    public Action<Vector3> onImpactEnemy;
     //action que se invocara cuando se inicialice el proyectil
     public Action onInitialize;
 
@@ -46,9 +47,14 @@ public class Projectile : PoolEntity
                 //si es posible recuperarlo, significara que el objeto es dañable
                 //por tanto, le aplico el daño correspondiente
                 damageable.TakeDamage(damage, transform.position);
+                onImpactEnemy?.Invoke(transform.position);
             }
             //invocamos el action informando de la posicion actual del proyectil en el momento de impactar
             onImpact?.Invoke(transform.position);
+            
+            
+                
+            
             ReturnPool();
         }
     }

@@ -13,17 +13,21 @@ public class LaserBeam : PoolEntity
     // Daño del láser
     public float damage = 10f;
     // Longitud máxima del láser
-    public float maxLength = 100f;
+    public float maxLength = 1000f;
     // Capa de objetos a los que puede dañar el láser
     public LayerMask shootableLayer;
     // Duración del láser antes de desaparecer
     public float laserDuration = 1.0f;
     // Tiempo en el que se activó el láser
     public float startTime;
+    public ParticleSystem impact;
+    
+    
 
     // Acción que informará sobre la posición de impacto
     public Action<Vector3> onImpact;
-
+    //action que se invocara cuando se inicialice el proyectil
+    public Action onInitialize;
 
     // Update is called once per frame
     void Update()
@@ -39,6 +43,8 @@ public class LaserBeam : PoolEntity
 
     }
 
+   
+    
     private void UpdateLaser()
     {
         // Inicializamos el rayo láser desde la posición actual con la dirección hacia adelante
@@ -64,11 +70,15 @@ public class LaserBeam : PoolEntity
 
             // Invocamos la acción de impacto informando sobre la posición de impacto
             onImpact?.Invoke(hit.point);
+            impact.transform.position = hit.point;
+            
+            
         }
         else
         {
             // Si el rayo láser no golpea nada, lo extendemos hasta su longitud máxima
             lineRenderer.SetPosition(1, ray.GetPoint(maxLength));
+            
         }
 
 
@@ -78,10 +88,13 @@ public class LaserBeam : PoolEntity
 
     }
 
+   
+
     public override void Initialize()
     {
         base.Initialize();
-
+        //si hay metoddos suscritos al action, lo invocamos
+        onInitialize?.Invoke();
         // Habilitamos el line renderer
         lineRenderer.enabled = true;
 
@@ -95,5 +108,7 @@ public class LaserBeam : PoolEntity
         gameObject.SetActive(false);
         // Deshabilitamos el line renderer
         lineRenderer.enabled = false;
+
+        
     }
 }

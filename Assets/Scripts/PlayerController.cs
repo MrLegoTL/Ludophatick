@@ -64,6 +64,7 @@ public class PlayerController : MonoBehaviour
     public float laserTime = 0.0f;
     public string laserAttack = "LaserBeam";
     public Transform shootingLaserPoint;
+    
 
     [Header("Aiming")]
     //longitud del raycas a realizar
