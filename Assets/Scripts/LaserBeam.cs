@@ -70,7 +70,12 @@ public class LaserBeam : PoolEntity
 
             // Invocamos la acción de impacto informando sobre la posición de impacto
             onImpact?.Invoke(hit.point);
-            impact.transform.position = hit.point;
+
+            if(impact != null)
+            {
+                impact.transform.position = hit.point;
+            }
+            
             
             
         }
