@@ -74,6 +74,7 @@ public class CasinoManager : MonoBehaviour
     public void ExitCasino()
     {
         casinoPanel.SetActive(false);
+        slotPanel.SetActive(false);
         ResumeGame();
     }
 

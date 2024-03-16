@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using TMPro;
+using UnityEngine.Events;
 
 public class SlotMachine : MonoBehaviour
 {
@@ -31,7 +32,9 @@ public class SlotMachine : MonoBehaviour
     public float spinDuration = 3f;
     //Indica si la tragaperra esta girando
     private bool isSpining;
+
     
+
 
     /// <summary>
     /// metodo que se ejecuta al pulsar el boton girar
@@ -100,4 +103,6 @@ public class SlotMachine : MonoBehaviour
 
         isSpining = false;
     }
+
+   
 }
