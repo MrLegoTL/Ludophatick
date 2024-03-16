@@ -8,15 +8,9 @@ using UnityEngine.Events;
 
 public class SlotMachine : MonoBehaviour
 {
-    ////Estructura para almacenar la información de la opcion
-    //[System.Serializable]
-    //public struct SlotOption
-    //{
-    //    public Sprite image;
-    //    public string text;
-    //}
+   
 
-
+   
 
     //referencia al panel de Slot
     public GameObject slotPanel;
@@ -33,8 +27,17 @@ public class SlotMachine : MonoBehaviour
     //Indica si la tragaperra esta girando
     private bool isSpining;
 
-    
 
+    private void Start()
+    {
+        // Asigna el componente Button y el controlador de clic a cada imagen de resultado
+        for (int i = 0; i < resultImage.Length; i++)
+        {
+            Button button = resultImage[i].GetComponent<Button>();
+            int optionIndex = i; // Almacenamos el índice de la opción para usarlo dentro del listener
+            button.onClick.AddListener(() => OnOptionClick(optionIndex));
+        }
+    }
 
     /// <summary>
     /// metodo que se ejecuta al pulsar el boton girar
@@ -55,19 +58,7 @@ public class SlotMachine : MonoBehaviour
         //int randomIndex = 0;
         float elapsedTime = 0f;
 
-        //// Inicia la animación de giro
-        //while (elapsedTime <= spinDuration)
-        //{
-        //    // Obtiene un índice para seleccionar una opción
-        //    randomIndex = UnityEngine.Random.Range(0, options.Count);
-        //    // Muestra la opción actual en el panel
-        //    resultImage.sprite = options[randomIndex].image;
-        //    resultText.text = options[randomIndex].text;
-        //    // Incrementa el tiempo transcurrido
-        //    elapsedTime += Time.unscaledDeltaTime;
-        //    // Espera un frame antes de continuar la animación
-        //    yield return null;
-        //}
+        
 
 
         //Inicia la animacion de giro
@@ -104,5 +95,19 @@ public class SlotMachine : MonoBehaviour
         isSpining = false;
     }
 
-   
+    private void OnOptionClick(int index)
+    {
+        // Desactiva el panel al hacer clic en la opción
+        slotPanel.SetActive(false);
+
+        // Imprime en la consola el contenido del arreglo resultText
+        string result = "Contenido de resultText:\n";
+        for (int i = 0; i < resultText.Length; i++)
+        {
+            result += "Elemento " + i + ": " + resultText[i].text + "\n";
+        }
+        Debug.Log(result);
+    }
+
+
 }

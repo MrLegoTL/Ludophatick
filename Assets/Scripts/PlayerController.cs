@@ -412,7 +412,7 @@ private void OnRoll()
         // Configura el retraso antes de poder disparar el láser de nuevo
         laserTime = Time.time + laserDelay;
     }
+    
 
-   
     #endregion
 }

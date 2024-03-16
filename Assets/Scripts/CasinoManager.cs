@@ -69,6 +69,7 @@ public class CasinoManager : MonoBehaviour
     {
         Time.timeScale = 1f; // Reanuda el tiempo en el juego
         canInteract = true;
+        isGamePaused = false;
     }
 
     public void ExitCasino()
