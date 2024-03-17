@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Unity.VisualScripting;
 
 public class Projectile : PoolEntity
 {
@@ -28,6 +29,12 @@ public class Projectile : PoolEntity
     //action que se invocara cuando se inicialice el proyectil
     public Action onInitialize;
 
+    public static Projectile instance;
+
+    private void Awake()
+    {
+        if (instance == null) instance = this;
+    }
 
     // Update is called once per frame
     void Update()
@@ -95,5 +102,10 @@ public class Projectile : PoolEntity
         rigidBody.isKinematic = true;
         trail.Stop();
 
+    }
+
+    public void ApplyDamageBoost(float damageBoostAmount)
+    {
+        damage *= damageBoostAmount;
     }
 }

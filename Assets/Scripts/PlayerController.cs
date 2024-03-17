@@ -413,6 +413,10 @@ private void OnRoll()
         laserTime = Time.time + laserDelay;
     }
     
+    public void ApplySpeedBoost(float speedBoostAmount)
+    {
+        movementSpeed *= speedBoostAmount; 
+    }
 
     #endregion
 }

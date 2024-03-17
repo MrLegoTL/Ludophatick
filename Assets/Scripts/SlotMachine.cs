@@ -100,13 +100,30 @@ public class SlotMachine : MonoBehaviour
         // Desactiva el panel al hacer clic en la opción
         slotPanel.SetActive(false);
 
-        // Imprime en la consola el contenido del arreglo resultText
-        string result = "Contenido de resultText:\n";
-        for (int i = 0; i < resultText.Length; i++)
+
+        // Obtiene el texto de la opción seleccionada
+        string selectedOptionText = resultText[index].text;
+
+        // Determina qué PowerUp corresponde al texto de la opción seleccionada
+        switch (selectedOptionText)
         {
-            result += "Elemento " + i + ": " + resultText[i].text + "\n";
+            case "More Speed":
+                // Aplica el PowerUp de aumento de velocidad al jugador
+                PlayerController.instance.ApplySpeedBoost(1.1f);
+                break;
+            case "More Damage":
+                // Aplica el PowerUp de aumento de daño al proyectil
+                Projectile.instance.ApplyDamageBoost(1.1f);
+                break;
+            // Agrega más casos según sea necesario para otras opciones de PowerUp
+            default:
+                Debug.LogWarning("Texto de opción no reconocido: " + selectedOptionText);
+                break;
         }
-        Debug.Log(result);
+
+
+        // Imprime en la consola el texto de la opción seleccionada
+        Debug.Log("Opción seleccionada: " + resultText[index].text);
     }
 
 
