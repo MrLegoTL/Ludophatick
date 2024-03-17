@@ -111,9 +111,13 @@ public class SlotMachine : MonoBehaviour
                 // Aplica el PowerUp de aumento de velocidad al jugador
                 PlayerController.instance.ApplySpeedBoost(1.1f);
                 break;
-            case "More Damage":
+            case "More Projectile Damage":
                 // Aplica el PowerUp de aumento de daño al proyectil
-                Projectile.instance.ApplyDamageBoost(1.1f);
+                Projectile.instance.ApplyDamageBoost(5f);
+                break;
+            case "More Laser Damage":
+                // Aplica el PowerUp de aumento de daño al proyectil
+                LaserBeam.instance.ApplyDamageBoost(2f);
                 break;
             // Agrega más casos según sea necesario para otras opciones de PowerUp
             default:

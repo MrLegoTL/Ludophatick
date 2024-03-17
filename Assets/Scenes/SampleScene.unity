@@ -6095,10 +6095,10 @@ MonoBehaviour:
   - {fileID: 21300036, guid: 7ab74e659e1f0a34d9cfec21c478fc12, type: 3}
   textOptions:
   - More Speed
-  - More Damage
-  - Inmunity
+  - More Projectile Damage
+  - More Laser Damage
   - Cooldown
-  - LaserDamage
+  - Inmunity
   spinDuration: 2
 --- !u!114 &1332131749
 MonoBehaviour:

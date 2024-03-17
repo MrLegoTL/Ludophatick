@@ -30,4 +30,9 @@ public class PowerUp
     {
         projectile.ApplyDamageBoost(damageBoostAmount);
     }
+    // Método para aplicar el PowerUp al proyectil
+    public void ApplyToLaserVeam(LaserBeam laser)
+    {
+        laser.ApplyDamageBoost(damageBoostAmount);
+    }
 }

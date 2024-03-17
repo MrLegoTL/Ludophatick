@@ -31,6 +31,12 @@ public class LaserBeam : PoolEntity
     //action que se invocara cuando se inicialice el proyectil
     public Action onInitialize;
 
+    public static LaserBeam instance;
+
+    private void Awake()
+    {
+        if (instance == null) instance = this;
+    }
     // Update is called once per frame
     void Update()
     {
@@ -122,5 +128,9 @@ public class LaserBeam : PoolEntity
         lineRenderer.enabled = false;
 
         
+    }
+    public void ApplyDamageBoost(float damageBoostAmount)
+    {
+        damage *= damageBoostAmount;
     }
 }
