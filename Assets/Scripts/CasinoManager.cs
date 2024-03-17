@@ -14,7 +14,7 @@ public class CasinoManager : MonoBehaviour
     public bool canInteract = false;
     //Indica si el juego esta pausado
     private bool isGamePaused = false;
-
+    public Animator animLever;
     // Start is called before the first frame update
     void Start()
     {
@@ -83,5 +83,10 @@ public class CasinoManager : MonoBehaviour
     {
         casinoPanel.SetActive(false);
         slotPanel.SetActive(true);
+        if (isGamePaused)
+        {
+            animLever.SetTrigger("Lever");
+        }
+
     }
 }

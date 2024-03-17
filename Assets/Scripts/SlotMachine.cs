@@ -5,12 +5,16 @@ using UnityEngine.UI;
 using System;
 using TMPro;
 using UnityEngine.Events;
+using Unity.VisualScripting;
 
 public class SlotMachine : MonoBehaviour
 {
-   
 
-   
+
+    public Projectile projectilePrefab;
+    public LaserBeam laserBeamPrefab;
+    //public Animator animLever;
+    
 
     //referencia al panel de Slot
     public GameObject slotPanel;
@@ -25,7 +29,8 @@ public class SlotMachine : MonoBehaviour
     //duracion de la animcion de giro
     public float spinDuration = 3f;
     //Indica si la tragaperra esta girando
-    private bool isSpining;
+    private bool isSpining =false;
+    
 
 
     private void Start()
@@ -38,26 +43,39 @@ public class SlotMachine : MonoBehaviour
             button.onClick.AddListener(() => OnOptionClick(optionIndex));
         }
     }
+    private void Update()
+    {
+        //animLever.SetTrigger("Lever");
+    }
+    public void StartSpin()
+    {
+       
+        Invoke("Spin", 1);
+    }
 
+    
     /// <summary>
     /// metodo que se ejecuta al pulsar el boton girar
     /// </summary>
     public void Spin()
     {
+       
         if (!isSpining)
         {
+            
             StartCoroutine(SpinAnimation());
         }
     }
 
     private IEnumerator SpinAnimation()
     {
-
+        
         isSpining = true;
         int[] randomIndices = new int[resultImage.Length];
         //int randomIndex = 0;
         float elapsedTime = 0f;
-
+        
+        
         
 
 
@@ -111,13 +129,13 @@ public class SlotMachine : MonoBehaviour
                 // Aplica el PowerUp de aumento de velocidad al jugador
                 PlayerController.instance.ApplySpeedBoost(1.1f);
                 break;
-            case "More Projectile Damage":
+            case "+10% Damage":
                 // Aplica el PowerUp de aumento de daño al proyectil
-                Projectile.instance.ApplyDamageBoost(5f);
+                ApplyDamageBoostToProjectiles();
                 break;
-            case "More Laser Damage":
+            case "x2 Laser Damage":
                 // Aplica el PowerUp de aumento de daño al proyectil
-                LaserBeam.instance.ApplyDamageBoost(2f);
+                ApplyDamageBoostToLaserBeam();
                 break;
             // Agrega más casos según sea necesario para otras opciones de PowerUp
             default:
@@ -129,6 +147,28 @@ public class SlotMachine : MonoBehaviour
         // Imprime en la consola el texto de la opción seleccionada
         Debug.Log("Opción seleccionada: " + resultText[index].text);
     }
+    private void ApplyDamageBoostToProjectiles()
+    {
+        // Si hay un prefab de proyectil y un script asociado, aplica el aumento de daño
+        if (projectilePrefab != null)
+        {
+            projectilePrefab.ApplyDamageBoost(1.1f); // Ajusta el valor según el aumento de daño deseado
+        }
+        else
+        {
+            Debug.LogWarning("¡Prefab de proyectil no asignado!");
+        }
+    }
 
-
+    private void ApplyDamageBoostToLaserBeam()
+    {
+        if(laserBeamPrefab != null)
+        {
+            laserBeamPrefab.ApplyDamageBoost(2f);
+        }
+        else
+        {
+            Debug.LogWarning("¡Prefab del Laser no asignado!");
+        }
+    }
 }

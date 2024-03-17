@@ -171,6 +171,8 @@ MonoBehaviour:
     m_Bits: 896
   laserDuration: 2
   startTime: 0
+  impact: {fileID: 0}
+  laserImpact: {fileID: 0}
 --- !u!1 &7331365379196442256
 GameObject:
   m_ObjectHideFlags: 0
