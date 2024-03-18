@@ -81,7 +81,7 @@ public class SlotMachine : MonoBehaviour
         //int randomIndex = 0;
         float elapsedTime = 0f;
 
-        
+        yield return new WaitForSecondsRealtime(1);
 
         //Inicia la animacion de giro
         while (elapsedTime <= spinDuration)
