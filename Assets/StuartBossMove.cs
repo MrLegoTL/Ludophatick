@@ -28,8 +28,9 @@ public class StuartBossMove : StateMachineBehaviour
             //verificamos is el enemigo se encuentra a la distancia de ataque
             if (!enemy.nav.pathPending && enemy.nav.remainingDistance <= enemy.attackDistance)
             {
+                animator.SetInteger("RandomAttack", Random.Range(0, 2));
                 //cambiamos al estado de ataque
-                animator.SetTrigger("Attack");
+                //animator.SetTrigger("Attack");
             }
         }
     }

@@ -11,4 +11,7 @@ public class BossEnemy : Enemy
     //punto d eorigen de los disparos
     public Transform shootingPointDownRight;
 
+    public string enemyLaser = "LaserBeamEnemy";
+    public Transform shootingPointLaser;
+
 }

@@ -23,6 +23,7 @@ public class Enemy : PoolEntity
     public string enemyProjectile = "EnemyBullets";
     //punto d eorigen de los disparos
     public Transform shootingPoint;
+    
     //velocidad de giro en estado de ataque
     public float enemyAttackTurnSpeed = 5;
     public bool enemyShoot = true;

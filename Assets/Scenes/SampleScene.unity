@@ -4861,6 +4861,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -6415531120960159693, guid: ff5ce97501080534dad53796d022697d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1839243109}
+    - targetCorrespondingSourceObject: {fileID: -1357883427244093455, guid: ff5ce97501080534dad53796d022697d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1167291695}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ff5ce97501080534dad53796d022697d, type: 3}
       insertIndex: -1
@@ -5307,6 +5310,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5ed6cc1aa9a62784dabcfda07d84f5a9, type: 3}
+--- !u!4 &680131579 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -1357883427244093455, guid: ff5ce97501080534dad53796d022697d, type: 3}
+  m_PrefabInstance: {fileID: 642604943}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &695834388
 GameObject:
   m_ObjectHideFlags: 0
@@ -8168,6 +8176,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4963292742750421217, guid: d494f02442699dc4b8ba6d9cee607c74, type: 3}
   m_PrefabInstance: {fileID: 1160311056}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1167291694
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1167291695}
+  m_Layer: 0
+  m_Name: ShootingPointLaser
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1167291695
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1167291694}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.209, y: 0.008, z: -0.015}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 680131579}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1179509156 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 946930069628499878, guid: 1c16eebcce3ef2846a3a7692e7ae3646, type: 3}
@@ -10808,6 +10847,9 @@ MonoBehaviour:
     prewarm: 5
   - id: LaserBeam
     prefab: {fileID: -6646707505770988656, guid: 0da8c23fc79c6444bbe2c55874614b48, type: 3}
+    prewarm: 1
+  - id: LaserBeamEnemy
+    prefab: {fileID: -6646707505770988656, guid: 22336d086f162564aa5849acb3e7db93, type: 3}
     prewarm: 1
 --- !u!4 &1617207412
 Transform:
@@ -28944,7 +28986,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4704419083515768207
 Transform:
   m_ObjectHideFlags: 0
@@ -34505,6 +34547,8 @@ MonoBehaviour:
   shootingPointUpRight: {fileID: 1207768247}
   shootingPointDownLeft: {fileID: 395768621}
   shootingPointDownRight: {fileID: 1839243109}
+  enemyLaser: LaserBeam
+  shootingPointLaser: {fileID: 1167291695}
 --- !u!1001 &7926433871746360449
 PrefabInstance:
   m_ObjectHideFlags: 0
