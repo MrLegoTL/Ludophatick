@@ -148,6 +148,16 @@ public class PlayerController : MonoBehaviour
         //mostramos el gizmo de check de colision en la direccion de movimiento
         Gizmos.DrawWireSphere(checkPoint.position, checkSize);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Money"))
+        {
+            GameManager.instance.CollectMoney(EnemyHealth.instance.moneyDropped);
+
+            Destroy(other.gameObject);
+        }
+    }
     #endregion
     #region METHODS
 

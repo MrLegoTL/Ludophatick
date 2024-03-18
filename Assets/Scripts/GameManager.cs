@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -19,6 +21,20 @@ public class GameManager : MonoBehaviour
     public Projectile projectilePrefab;
 
     private int completeWaves = 0;
+
+    [Header("Money Manager")]
+    //Dinero del jugador
+    public int moneyCount = 0;
+    //Referencia al texto del dinero
+    public TMP_Text moneyText;
+
+    public static GameManager instance;
+
+    private void Awake()
+    {
+        if(instance == null) instance = this;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -96,5 +112,22 @@ public class GameManager : MonoBehaviour
         public GameObject[] enemyTypes;
         //Variable para el nuemro de enemigos por olead
         public int enemiesPerWaves;
+    }
+
+    public void CollectMoney(int amount)
+    {
+        //Aumenta el dinero del jugador
+        moneyCount += amount;
+
+        UpdateMoneyUI();
+    }
+
+    private void UpdateMoneyUI()
+    {
+        //Actualiza el exto del dinero del jugador
+        if(moneyText != null) 
+        {
+            moneyText.text = moneyCount.ToString();
+        }
     }
 }

@@ -21,10 +21,15 @@ public class EnemyHealth : MonoBehaviour , IDamageable<float>
     public UnityEvent OnDeadEvent;
     //referencia al rigidbody
     public Rigidbody rb;
+    public int moneyDropped = 10;
+    public GameObject moneyPrefab;
 
+    public static EnemyHealth instance;
 
-
-
+    private void Awake()
+    {
+        if (instance == null) instance = this;
+    }
 
 
     // Start is called before the first frame update
@@ -73,6 +78,7 @@ public class EnemyHealth : MonoBehaviour , IDamageable<float>
     {
         //invocamos el evento de unity
         OnDeadEvent?.Invoke();
+        Instantiate(moneyPrefab, transform.position, Quaternion.identity);
         //ejecutamos la animacion de muerte
         animator.SetTrigger("Dead");
         Debug.Log("Enemigo muerto");      
