@@ -62,7 +62,7 @@ public class PlayerController : MonoBehaviour
     // Agrega esta variable para controlar el retraso entre disparos del láser
     public float laserDelay = 1.0f;
     public float laserTime = 0.0f;
-    public string laserAttack = "LaserBeam";
+    public string laserAttack = "LaserBeamEnemy";
     public Transform shootingLaserPoint;
     
 

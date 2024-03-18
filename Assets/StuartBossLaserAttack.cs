@@ -5,21 +5,36 @@ using UnityEngine;
 public class StuartBossLaserAttack : StateMachineBehaviour
 {
     private BossEnemy bossEnemy;
+    private bool laserSpawned = false;
+    private Vector3 directionToPlayer;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         bossEnemy = animator.GetComponentInParent<BossEnemy>();
-        Vector3 laserDirection = bossEnemy.transform.forward;
-        //// Crea una instancia del láser
-        //LaserBeam laser = Instantiate(laserPrefab, transform.position, Quaternion.LookRotation(laserDirection));
-        PoolManager.instance.Pull(bossEnemy.enemyLaser, bossEnemy.shootingPointLaser.position, Quaternion.LookRotation(laserDirection));
+        // Calcular la dirección hacia el jugador
+        directionToPlayer = bossEnemy.transform.forward;//(bossEnemy.target.position - bossEnemy.transform.position).normalized;
 
+
+        // Iniciar una corutina para esperar 1 segundo antes de instanciar el láser
+        bossEnemy.StartCoroutine(SpawnLaserAfterDelay());
+    }
+    // Método para instanciar el láser después de un retraso
+    IEnumerator SpawnLaserAfterDelay()
+    {
+        yield return new WaitForSeconds(1f);
+
+        if (!laserSpawned)
+        {
+            PoolManager.instance.Pull(bossEnemy.enemyLaser, bossEnemy.shootingPointLaser.position, Quaternion.LookRotation(directionToPlayer));
+            laserSpawned = false;
+        }
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+
         bossEnemy.transform.rotation = Quaternion.Slerp(bossEnemy.transform.rotation,
                                                  Quaternion.LookRotation(bossEnemy.target.position - bossEnemy.transform.position),
                                                  bossEnemy.enemyAttackTurnSpeed * Time.deltaTime);

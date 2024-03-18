@@ -14,4 +14,14 @@ public class BossEnemy : Enemy
     public string enemyLaser = "LaserBeamEnemy";
     public Transform shootingPointLaser;
 
+    public static BossEnemy i;
+
+
+    private void Awake()
+    {
+        if (i == null) i = this;
+    }
+
+  
+
 }

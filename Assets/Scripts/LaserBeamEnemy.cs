@@ -1,0 +1,141 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using System;
+
+public class LaserBeamEnemy : PoolEntity
+{
+    //public GameObject firePoint;
+
+    [Header("Components")]
+    public LineRenderer lineRenderer;
+
+    [Header("Laser")]
+    // Daño del láser
+    public float damage = 10f;
+    // Longitud máxima del láser
+    public float maxLength = 1000f;
+    // Capa de objetos a los que puede dañar el láser
+    public LayerMask shootableLayer;
+    // Duración del láser antes de desaparecer
+    public float laserDuration = 1.0f;
+    // Tiempo en el que se activó el láser
+    public float startTime;
+    public ParticleSystem impact;
+    public ParticleSystem laserImpact;
+
+
+
+    // Acción que informará sobre la posición de impacto
+    public Action<Vector3> onImpact;
+    public Action<Vector3> onImpactEnemy;
+    //action que se invocara cuando se inicialice el proyectil
+    public Action onInitialize;
+
+    public static LaserBeamEnemy instance;
+
+    private void Awake()
+    {
+        if (instance == null) instance = this;
+    }
+    // Update is called once per frame
+    void Update()
+    {
+        // Actualizamos el láser
+        UpdateLaser();
+        // Si ha pasado la duración del láser, lo desactivamos
+        if (Time.time - startTime >= laserDuration)
+        {
+            Deactivate();
+        }
+
+
+    }
+
+
+
+    private void UpdateLaser()
+    {
+        // Obtenemos la dirección hacia el jugador
+        //Vector3 directionToPlayer = (PlayerController.instance.transform.position - transform.position).normalized;
+        // Inicializamos el rayo láser desde la posición actual con la dirección hacia adelante
+        Ray ray = new Ray(transform.position, transform.forward);
+        RaycastHit hit;
+
+        // Configuramos el line renderer
+        lineRenderer.SetPosition(0, ray.origin);
+
+        // Si el rayo láser golpea algo
+        if (Physics.Raycast(ray, out hit, maxLength, shootableLayer))
+        {
+            // Configuramos el final del line renderer en el punto de impacto
+            lineRenderer.SetPosition(1, hit.point);
+
+            // Si el objeto golpeado es dañable
+            IDamageable<float> damageable = hit.collider.GetComponent<IDamageable<float>>();
+            if (damageable != null)
+            {
+
+                // Aplicamos daño al objeto
+                damageable.TakeDamage(damage, hit.point);
+                onImpactEnemy?.Invoke(transform.position);
+            }
+
+            // Invocamos la acción de impacto informando sobre la posición de impacto
+            onImpact?.Invoke(hit.point);
+
+            if (impact != null)
+            {
+                impact.transform.position = hit.point;
+            }
+            if (laserImpact != null)
+            {
+                laserImpact.transform.position = hit.point;
+            }
+
+
+
+        }
+        else
+        {
+            // Si el rayo láser no golpea nada, lo extendemos hasta su longitud máxima
+            lineRenderer.SetPosition(1, ray.GetPoint(maxLength));
+
+        }
+
+
+
+        transform.position = BossEnemy.i.shootingPointLaser.transform.position;
+        transform.forward = BossEnemy.i.transform.forward;
+
+    }
+
+
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        //si hay metoddos suscritos al action, lo invocamos
+        onInitialize?.Invoke();
+        // Habilitamos el line renderer
+        lineRenderer.enabled = true;
+
+        // Guardamos el tiempo de activación del láser
+        startTime = Time.time;
+    }
+
+    public override void Deactivate()
+    {
+        base.Deactivate();
+        gameObject.SetActive(false);
+        // Deshabilitamos el line renderer
+        lineRenderer.enabled = false;
+
+
+    }
+    public void ApplyDamageBoost(float damageBoostAmount)
+    {
+        damage *= damageBoostAmount;
+    }
+}
+
