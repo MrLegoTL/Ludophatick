@@ -13,7 +13,7 @@ public class SlotMachine : MonoBehaviour
 
     public Projectile projectilePrefab;
     public LaserBeam laserBeamPrefab;
-    //public Animator animLever;
+    public Animator animLever;
     
 
     //referencia al panel de Slot
@@ -30,7 +30,7 @@ public class SlotMachine : MonoBehaviour
     public float spinDuration = 3f;
     //Indica si la tragaperra esta girando
     private bool isSpining =false;
-    
+    public float waitTime = 0f;
 
 
     private void Start()
@@ -45,12 +45,17 @@ public class SlotMachine : MonoBehaviour
     }
     private void Update()
     {
-        //animLever.SetTrigger("Lever");
+       
     }
+
+    
     public void StartSpin()
     {
-       
-        Invoke("Spin", 1);
+        
+        animLever.SetTrigger("Lever");
+        Spin();
+        
+        //Invoke("Spin",1);
     }
 
     
@@ -60,13 +65,14 @@ public class SlotMachine : MonoBehaviour
     public void Spin()
     {
        
-        if (!isSpining)
+        if (!isSpining )
         {
             
             StartCoroutine(SpinAnimation());
         }
     }
 
+   
     private IEnumerator SpinAnimation()
     {
         
@@ -74,10 +80,8 @@ public class SlotMachine : MonoBehaviour
         int[] randomIndices = new int[resultImage.Length];
         //int randomIndex = 0;
         float elapsedTime = 0f;
-        
-        
-        
 
+        
 
         //Inicia la animacion de giro
         while (elapsedTime <= spinDuration)
@@ -109,8 +113,9 @@ public class SlotMachine : MonoBehaviour
             resultImage[i].sprite = options[randomIndices[i]];
             resultText[i].text = textOptions[randomIndices[i]];
         }
-
+        
         isSpining = false;
+        
     }
 
     private void OnOptionClick(int index)
