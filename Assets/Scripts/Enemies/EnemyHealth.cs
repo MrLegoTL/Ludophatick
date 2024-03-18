@@ -23,6 +23,7 @@ public class EnemyHealth : MonoBehaviour , IDamageable<float>
     public Rigidbody rb;
     public int moneyDropped = 10;
     public GameObject moneyPrefab;
+    public Transform moneyPoint;
 
     public static EnemyHealth instance;
 
@@ -78,7 +79,7 @@ public class EnemyHealth : MonoBehaviour , IDamageable<float>
     {
         //invocamos el evento de unity
         OnDeadEvent?.Invoke();
-        Instantiate(moneyPrefab, transform.position, Quaternion.identity);
+        Instantiate(moneyPrefab, moneyPoint.transform.position, Quaternion.identity);
         //ejecutamos la animacion de muerte
         animator.SetTrigger("Dead");
         Debug.Log("Enemigo muerto");      

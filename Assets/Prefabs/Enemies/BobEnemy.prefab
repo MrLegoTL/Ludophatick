@@ -96,6 +96,37 @@ Transform:
   - {fileID: 2513522465679324323}
   m_Father: {fileID: 1106362268687582953}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6089566733381668357
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8019775136011445159}
+  m_Layer: 9
+  m_Name: MoneyPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8019775136011445159
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6089566733381668357}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.6, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1106362268687582953}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6446498410883646816
 GameObject:
   m_ObjectHideFlags: 0
@@ -116,7 +147,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1106362268687582953
 Transform:
   m_ObjectHideFlags: 0
@@ -131,6 +162,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2295368770114244452}
+  - {fileID: 8019775136011445159}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!135 &5701158208031913385
@@ -375,6 +407,7 @@ MonoBehaviour:
   rb: {fileID: 9060945141787345737}
   moneyDropped: 20
   moneyPrefab: {fileID: 3717875888753308944, guid: de3584413a2d51042882a9fcb7a25742, type: 3}
+  moneyPoint: {fileID: 8019775136011445159}
   launchForce: 500
 --- !u!1 &7819683643873815848
 GameObject:

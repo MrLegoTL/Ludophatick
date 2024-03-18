@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Casino
+  - Money
+  - FxTemporaire
   layers:
   - Default
   - TransparentFX
