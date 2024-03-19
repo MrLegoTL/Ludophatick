@@ -6,6 +6,11 @@ public class SpawnPoint : MonoBehaviour
 {
     //Array de prefabs de enemigos
     public GameObject[] enemyPrefabs;
+
+    // Variable para verificar si el punto de spawn está activo
+    public bool isActive = false;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,5 +36,19 @@ public class SpawnPoint : MonoBehaviour
 
         //Instancia el enemigo en la posicion y rotacion del SpawnPoint
         Instantiate(enemyPrefab, transform.position, transform.rotation);
+    }
+
+    // Método para activar el punto de spawn
+    public void Activate()
+    {
+        isActive = true;
+        gameObject.SetActive(true);
+    }
+
+    // Método para desactivar el punto de spawn
+    public void Deactivate()
+    {
+        isActive = false;
+        gameObject.SetActive(false);
     }
 }
