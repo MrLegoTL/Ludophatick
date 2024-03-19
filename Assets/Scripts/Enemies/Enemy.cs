@@ -78,6 +78,10 @@ public class Enemy : PoolEntity
             }
         }
     }
+    public void CanEnemyShoot()
+    {
+        enemyShoot=false;
+    }
 
     public override void Initialize()
     {

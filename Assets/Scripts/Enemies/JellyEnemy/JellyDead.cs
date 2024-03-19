@@ -7,7 +7,7 @@ using UnityEngine.Events;
 public class JellyDead : EnemyHealth
 {
     [Header("JellyDead")]
-    public Transform playerTransform;
+    //public Transform playerTransform;
     public float jumpForce = 10f;
     
 
@@ -33,9 +33,9 @@ public class JellyDead : EnemyHealth
     }
     public void JellyLunch()
     {
+        
 
-
-        Vector3 direction = (playerTransform.position - transform.position).normalized;
+        Vector3 direction = (PlayerController.instance.transform.position - transform.position).normalized;
         Vector3 jumpDirection = Vector3.up + direction;
         transform.rotation = Quaternion.Euler(90f, transform.eulerAngles.y, transform.eulerAngles.z);
         rb.isKinematic = false;

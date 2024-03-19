@@ -19,12 +19,13 @@ public class EnemyHealth : MonoBehaviour , IDamageable<float>
     public static Action OnDead;
     //unity event para lanzar efectos al morir
     public UnityEvent OnDeadEvent;
+    public UnityEvent OnAfterDead;
     //referencia al rigidbody
     public Rigidbody rb;
     public int moneyDropped = 10;
     public GameObject moneyPrefab;
     public Transform moneyPoint;
-
+    public string moveAnimation;
     public static EnemyHealth instance;
 
     private void Awake()
@@ -86,9 +87,14 @@ public class EnemyHealth : MonoBehaviour , IDamageable<float>
 
         //llamada al action para los observadores suscritos
         OnDead?.Invoke();
-
+        Invoke("AfterDead", 10f);
         
     }   
+
+    public void AfterDead()
+    {
+        OnAfterDead?.Invoke();
+    }
 
     /// <summary>
     /// Restaura la vida del enemigo
@@ -99,10 +105,10 @@ public class EnemyHealth : MonoBehaviour , IDamageable<float>
         //reseteamos el trigger para evitar que se reinicie
         animator.ResetTrigger("Dead");
         //forzamos al aniamciond de Move
-        //animator.Play("Bob_Move");
+        animator.Play(moveAnimation);
 
     }
 
-    
+
 
 }

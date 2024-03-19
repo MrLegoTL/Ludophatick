@@ -3,32 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
-    // Array de puntos de spawn disponibles en tu juego
-    public SpawnPoint[] spawnPoints;
+    [Header("Enemies")]
+    //nombres  en la pool de los enemigos
+    public string[] enemyList;
+    //puntos de sapwn de los enemigos
+    public Transform[] spawnPoints;
 
-    // Array de prefabs de enemigos disponibles en tu juego
-    public GameObject[] enemyPrefabs;
-    
-    // Lista de oleadas generadas automáticamente
-    public List<Wave> waves = new List<Wave>();
-
-    //public int enemiesPerWave = 5; // Asigna un valor inicial a enemiesPerWave
-
-    private int currentWaveIndex = 0;
-
-    private int activeEnemyCount = 0;
-
-    [Header("Increase Difficulty")]
-    public int wavesBetweenDifficultyIncrease = 5;
-    public float enemyHealtIncreaseFactor = 1.2f;
-    public float enemyDamageIncreaseFactor = 1.2f;
-    public int enemiesPerWavesIncrease = 2;
-    public Projectile projectilePrefab;
-
-    public int completeWaves = 0;
+    [Header("Waves")]
+    //retardo en la generacion de enemigos
+    public float spawnDelay = 0.2f;
+    //numero de enemigos a multiplicar por la oleada
+    public int waveEnemyNumberMultiplier = 20;
+    //enemigos en la oleada actual
+    private int waveEnemies;
+    //numeros de enemigos restantes de la oleada actual
+    private int remainingEnemies;
+    //numero de oleada actual
+    public int currentWave = 0;
+    //temporizador para la generacion de enemigos
+    private float spawnTimer = 0f;
+    //limite maximo de enemigos en escena
+    public int maxEnemiesOnScene = 15;
+    //contador de enemigos actuales en la escena
+    private int enemiesOnScene;
 
     [Header("Money Manager")]
     //Dinero del jugador
@@ -40,217 +41,115 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if(instance == null) instance = this;
+        if (instance == null) instance = this;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        GenerateWaves();
-        StartFirstWave();
-        //completeWaves++;
-        //if(completeWaves % wavesBetweenDifficultyIncrease == 0)
-        //{
-        //    IncreaseDiffuculty();
-        //}
+        //iniciamos la primera oleada al momento de comenzar la partida
+        NewWave();
+    }
+    private void OnEnable()
+    {
+        EnemyHealth.OnDead += EnemyDead;
+    }
+    private void OnDisable()
+    {
+        EnemyHealth.OnDead -= EnemyDead;
     }
     private void Update()
     {
+        //solo contamos si el temporizador no ha llegado al final
+        if (spawnTimer <= spawnDelay)
+        {
+
+            spawnTimer += Time.deltaTime;
+        }
+
+        //si quedan enemigos por generar y ha pasado el tiempo de retardo entre enemigos
+        if (waveEnemies > 0 &&
+           spawnTimer > spawnDelay &&
+           enemiesOnScene < maxEnemiesOnScene)
+        {
+            //generamos el nuevo enemigo
+            GeneratedEnemy(enemyList);
+            //resetamos el contador
+            spawnTimer = 0;
+        }
+
+        //si han muerto todos los enemigos de la oleada actual
+        if (remainingEnemies <= 0)
+        {
+            //iniciamos una nueva oleada
+            NewWave();
+        }
         UpdateMoneyUI();
     }
-    public void StartFirstWave()
-    {
-        StartWave();
-    }
-    public void EnemySpawned()
-    {
-        activeEnemyCount++;
-    }
-    public void EnemyDied()
-    {
-        activeEnemyCount--;
 
-        if (activeEnemyCount <= 0)
-        {
-            StartNextWave();
-        }
-    }
-
-    private void StartNextWave()
+    /// <summary>
+    /// Genera un enemigo aleatorio a partir de las lista recibida
+    /// pudiendo ser una lista de distintos tipos de enemigos o bosses
+    /// </summary>
+    /// <param name="enemyPool"></param>
+    public void GeneratedEnemy(string[] enemyPool)
     {
-        currentWaveIndex++;
-        if (currentWaveIndex < waves.Count)
+        if (spawnPoints.Length == 0 || enemyPool.Length == 0)
         {
-            StartWave();
-        }
-        else
-        {
-            // No hay más oleadas, el juego ha terminado
-            Debug.Log("¡Fin del juego!");
-        }
-    }
-    public void StartWave()
-    {
-        //completeWaves++;
-        //if (completeWaves % wavesBetweenDifficultyIncrease == 0)
-        //{
-        //    IncreaseDiffuculty();
-        //}
-        // Activar los SpawnPoints necesarios para la oleada actual
-        activeEnemyCount = CalculateTotalEnemiesForCurrentWave();
-        ActivateSpawnPointsForCurrentWave();
-        SpawnEnemiesForCurrentWave();
-    }
-
-    private int CalculateTotalEnemiesForCurrentWave()
-    {
-        int totalEnemies = 0;
-        foreach (GameObject enemyPrefab in waves[currentWaveIndex].enemyTypes)
-        {
-            totalEnemies += waves[currentWaveIndex].enemiesPerWave;
-        }
-        return totalEnemies;
-    }
-
-    private void ActivateSpawnPointsForCurrentWave()
-    {
-        // Obtener la oleada actual
-        Wave currentWave = waves[currentWaveIndex];
-
-        // Verificar si la oleada actual tiene puntos de spawn
-        if (currentWave != null && currentWave.spawnPoints != null)
-        {
-            // Iterar sobre los índices de los puntos de spawn de la oleada actual
-            foreach (int spawnPointIndex in currentWave.spawnPoints)
-            {
-                if (spawnPoints[spawnPointIndex] != null)
-                {
-                    spawnPoints[spawnPointIndex].Activate();
-                }
-                else
-                {
-                    Debug.LogWarning("El punto de spawn en el índice " + spawnPointIndex + " es nulo.");
-                }
-            }
-        }
-        else
-        {
-            Debug.LogWarning("No se han definido puntos de spawn para la oleada actual.");
-        }
-    }
-
-    private void SpawnEnemiesForCurrentWave()
-    {
-        Wave currentWave = waves[currentWaveIndex];
-        foreach (GameObject enemyPrefab in currentWave.enemyTypes)
-        {
-            foreach (SpawnPoint spawnPoint in spawnPoints)
-            {
-                if (spawnPoint.isActive)
-                {
-                    spawnPoint.SpawnEnemy(enemyPrefabs);
-                }
-            }
-        }
-    }
-
-
-    private void GenerateWaves()
-    {
-        // Lógica para generar las oleadas automáticamente
-        for (int i = 0; i < 5; i++)
-        {
-            Wave newWave = new Wave();
-            newWave.enemyTypes = GenerateEnemyTypesForWave(); // Implementa este método para generar tipos de enemigos
-            newWave.spawnPoints = GenerateSpawnPointsForWave(); // Implementa este método para generar puntos de spawn
-            newWave.enemiesPerWave = 5 + i * enemiesPerWavesIncrease; // Ajusta la cantidad de enemigos por oleada
-            waves.Add(newWave);
-        }
-    }
-
-    private GameObject[] GenerateEnemyTypesForWave()
-    {
-        List<GameObject> selectedEnemies = new List<GameObject>();
-        // Obtener una cantidad específica de prefabs de enemigos para la oleada actual
-        for (int i = 0; i < enemyPrefabs.Length; i++)
-        {
-            // Seleccionar aleatoriamente un prefab de enemigo de la lista
-            GameObject enemyPrefab = enemyPrefabs[i];
-            selectedEnemies.Add(enemyPrefab);
+            Debug.LogError("Te has olvidado de configurar o los Spawns o los enemigos");
+            return;
         }
 
-        return selectedEnemies.ToArray();
-        
+        int randomSpawn = Random.Range(0, spawnPoints.Length);
+        int randomEnemy = Random.Range(0, enemyPool.Length);
+
+        Transform[] spawnActivate = spawnPoints.Where(s => s.gameObject.activeSelf == true).ToArray();
+        int random = Random.Range(0, spawnActivate.Length);
+
+
+
+        PoolManager.instance.Pull(enemyPool[randomEnemy],
+                              spawnActivate[random].position,
+                              Quaternion.identity);
+        //tras generar un nuevo enemigo, decremento el contador de enemigos a generar
+        waveEnemies--;
+        //incrementamos el contador  de enemigos en escena
+        enemiesOnScene++;
+
+
+
+
     }
 
-    private int[] GenerateSpawnPointsForWave()
+
+    /// <summary>
+    /// Metodo ejecutado cuando un enemigo muere
+    /// </summary>
+    public void EnemyDead()
     {
-        List<int> selectedSpawnPoints = new List<int>();
-        // Lógica para seleccionar los puntos de spawn disponibles en cada oleada
-        // En este ejemplo, seleccionamos aleatoriamente algunos puntos de spawn
-        for (int i = 0; i < spawnPoints.Length; i++)
-        {
-            if (Random.value < 0.5f) // Probabilidad del 50%
-            {
-                selectedSpawnPoints.Add(i);
-            }
-        }
-        return selectedSpawnPoints.ToArray();
+        //reducimos el numero de enemigos restantes de la oleada
+        remainingEnemies--;
+        //decrementamos el contador de enemigos en escena
+        enemiesOnScene--;
     }
 
-    //private int CalculateEnemiesPerWave(int waveIndex)
-    //{
-    //    // Calculamos la cantidad base de enemigos por oleada
-    //    int baseEnemiesPerWave = 10;
-
-    //    // Aumentamos la cantidad de enemigos por oleada en función del número de oleadas completadas
-    //    int totalEnemiesPerWave = baseEnemiesPerWave + waves.Count * enemiesPerWavesIncrease;
-
-    //    return totalEnemiesPerWave;
-    //}
-
-    
-
-    //private void IncreaseDiffuculty()
-    //{
-
-    //    foreach (Wave wave in waves)
-    //    {
-    //        //Aumentar el numero de enemigos por oleadas
-    //        wave.enemiesPerWave += enemiesPerWavesIncrease;
-
-    //        //Aumentar la salud d elos enemigos
-    //        foreach (GameObject enemyPrefab in wave.enemyTypes)
-    //        {
-    //            EnemyHealth enemyHealth = enemyPrefab.GetComponent<EnemyHealth>();
-    //            if (enemyHealth != null)
-    //            {
-    //                enemyHealth.maxHealth *= enemyHealtIncreaseFactor;
-    //            }
-    //        }
-
-    //        //aumentar el daño de los enemigos
-    //        foreach (GameObject enemyPrefab in wave.enemyTypes)
-    //        {
-    //            if (projectilePrefab != null)
-    //            {
-    //                projectilePrefab.damage *= enemyDamageIncreaseFactor;
-    //            }
-    //        }
-
-    //    }
-    //}
-
-    //Estructura de datos para representar una oleada
-    [System.Serializable]
-    public class Wave
+    /// <summary>
+    /// Realiza todas las acciones necesarias para indicar una nueva oleada
+    /// </summary>
+    public void NewWave()
     {
-        //Indices de SpawnPoints activados para esta oleada
-        public int[] spawnPoints;
-        //Tipos de enemigos que apareceran en esta oleada
-        public GameObject[] enemyTypes;
-        //Variable para el nuemro de enemigos por olead
-        public int enemiesPerWave;
+        //incremento el numero de la oleada
+        currentWave++;
+        ////asignamos el valor del numero de oleada
+        //waveNumber.text = currentWave.ToString();
+        ////iniciamnos la aniamcion del hud de oleada
+        //waveAnimator.SetTrigger("Show");
+        //calculamos el numero de enemigos que seran generados en esta oleada
+        waveEnemies = currentWave * waveEnemyNumberMultiplier;
+        //el numero de enemigos restantes se inicializara con el numero de enemigos de la oleada
+        remainingEnemies = waveEnemies;
+        //inicializamos el contador de numero de enemigos presentes en la escena
+        enemiesOnScene = 0;
     }
 
     public void CollectMoney(int amount)
@@ -264,7 +163,7 @@ public class GameManager : MonoBehaviour
     private void UpdateMoneyUI()
     {
         //Actualiza el exto del dinero del jugador
-        if(moneyText != null) 
+        if (moneyText != null)
         {
             moneyText.text = moneyCount.ToString();
         }

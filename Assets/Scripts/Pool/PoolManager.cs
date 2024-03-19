@@ -15,10 +15,25 @@ public class PoolManager : MonoBehaviour
         if (!instance) instance = this;
 
     }
+   
+
+    private void OnEnable()
+    {
+        // nos suscribimos al Action static de la clase PoolEntity mediante el metodo Push
+        // que sera invocado cada vex que un PoolEntity quiera volver a la pool
+        PoolEntity.OnReturnToPool += Push;
+    }
+
+    private void OnDisable()
+    {
+        //nos de-suscribimos delAction en el caso en el que dejemos de estar activos
+        // para que el action no nos invoque sin estar presentes (lo que daria lugar a errores)
+        PoolEntity.OnReturnToPool -= Push;
+    }
     // Start is called before the first frame update
     void Start()
     {
-
+        InitializePools();
     }
 
     // Update is called once per frame
