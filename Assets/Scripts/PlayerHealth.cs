@@ -100,5 +100,10 @@ public class PlayerHealth : MonoBehaviour, IDamageable<float>
         //desactivamos el script que gestiona el movimiento del jugador
         //esto mismo lo podriamos hacer directamente en los unity events
         playerController.enabled = false;
+        Invoke("EndGame", 2f);
+    }
+    void EndGame()
+    {
+        GameManager.instance.EndGame();
     }
 }

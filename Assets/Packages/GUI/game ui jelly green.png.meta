@@ -118,7 +118,7 @@ TextureImporter:
         width: 1581
         height: 455
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -126,6 +126,27 @@ TextureImporter:
       bones: []
       spriteID: 712e82932c281c54d89c308687395b90
       internalID: -8567040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: game ui jelly green_1
+      rect:
+        serializedVersion: 2
+        x: 1865
+        y: 525
+        width: 1002
+        height: 1252
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6cf7160b85fa1a847bf6e3a7684602e3
+      internalID: -758636845
       vertices: []
       indices: 
       edges: []
@@ -142,6 +163,7 @@ TextureImporter:
     secondaryTextures: []
     nameFileIdTable:
       game ui jelly green_0: -8567040
+      game ui jelly green_1: -758636845
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

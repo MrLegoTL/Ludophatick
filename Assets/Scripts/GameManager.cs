@@ -5,11 +5,18 @@ using UnityEngine.UI;
 using TMPro;
 using System.Linq;
 using System;
-using UnityEngine;
 using Random = UnityEngine.Random;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public enum GameState
+    {
+        Game,
+        Paused,
+        GameOver
+    }
+
     [Header("Enemies")]
     //nombres  en la pool de los enemigos
     public string[] enemyList;
@@ -42,14 +49,27 @@ public class GameManager : MonoBehaviour
     public static Action<string,int> onMoneyGet;
     public static Action<string, int> onMoneySpend;
 
+    [Header("PauseMenu")]
+    public GameObject pauseMenu;
+
+    [Header("EndGame")]
+    public GameObject GameOverMenu;
+
     //public Projectile projectile;
     public LaserBeam laser;
 
     public static GameManager instance;
 
+    //Alamcena el esatdo actual del juego
+    public GameState currentState;
+    //Almacena el estado previo del juego
+    public GameState previousState;
+
     private void Awake()
     {
         if (instance == null) instance = this;
+
+        currentState = GameState.Game;
     }
 
     // Start is called before the first frame update
@@ -59,6 +79,7 @@ public class GameManager : MonoBehaviour
         //projectile.RestartDamage();
         //iniciamos la primera oleada al momento de comenzar la partida
         NewWave();
+        GameOverMenu.SetActive(false);
         
     }
     private void OnEnable()
@@ -96,6 +117,88 @@ public class GameManager : MonoBehaviour
             NewWave();
         }
         UpdateMoneyUI();
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            CheckForPauseAndResume();
+        }
+    }
+
+    /// <summary>
+    /// Metodo para cambia el estado del juego
+    /// </summary>
+    /// <param name="newState"></param>
+    public void ChangeState(GameState newState)
+    {
+        currentState = newState;
+    }
+
+    /// <summary>
+    /// Metodo para la pausa del juego
+    /// </summary>
+    public void PauseGame()
+    {
+        //CAMBIA EL ESTADO DEL JUEGO
+        ChangeState(GameState.Paused);
+
+        //pausa el juego
+        Time.timeScale = 0f;
+        //activa la pantalla de pausa
+        pauseMenu.SetActive(true);
+        
+    }
+
+    /// <summary>
+    /// Metodo pra Renaudar el juego
+    /// </summary>
+    public void ResumeGame()
+    {
+        // cambia el estado del juego
+        ChangeState(GameState.Game);
+
+        // reanuda el juego
+        Time.timeScale = 1f;
+
+        // desactiva la pantalla de pausa
+        pauseMenu.SetActive(false);
+    }
+
+    /// <summary>
+    /// metodo que comprueba si esta pausado el juego y lo renauda
+    /// </summary>
+    void CheckForPauseAndResume()
+    {
+        if (currentState == GameState.Paused)
+        {
+            ResumeGame();
+        }
+        else
+        {
+            PauseGame();
+        }
+    }
+
+    /// <summary>
+    /// Metodo para reiniciar la partida
+    /// </summary>
+    public void Restart()
+    {
+        //Si se reinicia la partida tras una pausa, hay que asegurar que el tiempo transcurrira con normalidad
+        Time.timeScale = 1;
+
+        //recuperamos el indice de la escena actual y la cargamos nuevamente
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void EndGame()
+    {
+        //Cambia el estado del juego
+        ChangeState(GameState.GameOver);
+        //pausa el juego
+        Time.timeScale = 0f;
+
+        //Activa la pantalla de GameOver
+        GameOverMenu.SetActive(true);
     }
 
     /// <summary>
