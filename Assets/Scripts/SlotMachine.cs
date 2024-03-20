@@ -168,15 +168,16 @@ public class SlotMachine : MonoBehaviour
     }
     private void ApplyDamageBoostToProjectiles()
     {
-        // Si hay un prefab de proyectil y un script asociado, aplica el aumento de daño
-        if (projectilePrefab != null)
-        {
-            projectilePrefab.ApplyDamageBoost(1.1f); // Ajusta el valor según el aumento de daño deseado
-        }
-        else
-        {
-            Debug.LogWarning("¡Prefab de proyectil no asignado!");
-        }
+        Projectile.instance.ApplyDamageBoost(1.1f);
+        //// Si hay un prefab de proyectil y un script asociado, aplica el aumento de daño
+        //if (projectilePrefab != null)
+        //{
+        //    projectilePrefab.ApplyDamageBoost(1.1f); // Ajusta el valor según el aumento de daño deseado
+        //}
+        //else
+        //{
+        //    Debug.LogWarning("¡Prefab de proyectil no asignado!");
+        //}
     }
 
     private void ApplyDamageBoostToLaserBeam()

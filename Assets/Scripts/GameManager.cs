@@ -42,6 +42,9 @@ public class GameManager : MonoBehaviour
     public static Action<string,int> onMoneyGet;
     public static Action<string, int> onMoneySpend;
 
+    //public Projectile projectile;
+    public LaserBeam laser;
+
     public static GameManager instance;
 
     private void Awake()
@@ -52,6 +55,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        laser.RestartDamageLaser();
+        //projectile.RestartDamage();
         //iniciamos la primera oleada al momento de comenzar la partida
         NewWave();
         

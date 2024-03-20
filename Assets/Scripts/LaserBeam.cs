@@ -41,7 +41,7 @@ public class LaserBeam : PoolEntity
 
     private void Start()
     {
-        currentDamage = damage;
+        
     }
     // Update is called once per frame
     void Update()
@@ -134,6 +134,10 @@ public class LaserBeam : PoolEntity
         lineRenderer.enabled = false;
 
         
+    }
+    public void RestartDamageLaser()
+    {
+        currentDamage = damage;
     }
     public void ApplyDamageBoost(float damageBoostAmount)
     {

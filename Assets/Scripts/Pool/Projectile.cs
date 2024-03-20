@@ -14,8 +14,8 @@ public class Projectile : PoolEntity
     [Header("Projectile")]
     //daño de projectil
     public float damage = 10f;
-    private float currentDamage; // Daño actual del proyectil
-    private float originalDamage; // Daño base original del proyectil
+    public float currentDamage;
+                              
     //velocidad de desplazamiento
     public float speed = 10f;
     //tiempo de vidas antes de autodestruise
@@ -37,6 +37,10 @@ public class Projectile : PoolEntity
     {
         if (instance == null) instance = this;
     }
+    private void Start()
+    {
+       // currentDamage = damage;
+    }
 
     // Update is called once per frame
     void Update()
@@ -44,6 +48,7 @@ public class Projectile : PoolEntity
         // si ha pasado su teimpo de vida , devolvemos el proyectil a la pool
         if (lifeTimeStamp < Time.time && active) ReturnPool();
     }
+   
     private void OnTriggerEnter(Collider other)
     {
         if ((shootableLayer & (1 << other.gameObject.layer)) != 0)
@@ -96,9 +101,7 @@ public class Projectile : PoolEntity
         lifeTimeStamp = Time.time + lifeTime;
 
 
-        // Al inicializar, el daño actual se establece al daño base
-        originalDamage = damage;
-        currentDamage = damage;
+       
     }
 
     public override void Deactivate()
@@ -111,20 +114,12 @@ public class Projectile : PoolEntity
 
     }
 
+    
+
     public void ApplyDamageBoost(float damageBoostAmount)
     {
-        // Guarda el daño base original si no se ha aplicado un aumento de daño aún
-        if (currentDamage == originalDamage)
-        {
-            originalDamage = currentDamage;
-        }
 
-        // Aplica el aumento de daño temporal
-        currentDamage += damageBoostAmount;
+        damage *= damageBoostAmount;
     }
-    // Método para restablecer el daño base al valor original
-    public void ResetDamage()
-    {
-        currentDamage = originalDamage;
-    }
+   
 }
