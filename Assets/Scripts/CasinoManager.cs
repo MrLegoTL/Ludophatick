@@ -92,6 +92,9 @@ public class CasinoManager : MonoBehaviour
             if (isGamePaused)
             {
                 animLever.SetTrigger("Lever");
+                SlotMachine.instance.StartSpin();
+                // Descontar el dinero del jugador
+                GameManager.instance.SpendPlayerMoney(casinoCost);
             }
 
         }

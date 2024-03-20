@@ -54,6 +54,7 @@ public class GameManager : MonoBehaviour
     {
         //iniciamos la primera oleada al momento de comenzar la partida
         NewWave();
+        
     }
     private void OnEnable()
     {

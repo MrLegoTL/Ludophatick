@@ -14,6 +14,8 @@ public class Projectile : PoolEntity
     [Header("Projectile")]
     //daño de projectil
     public float damage = 10f;
+    private float currentDamage; // Daño actual del proyectil
+    private float originalDamage; // Daño base original del proyectil
     //velocidad de desplazamiento
     public float speed = 10f;
     //tiempo de vidas antes de autodestruise
@@ -92,6 +94,11 @@ public class Projectile : PoolEntity
         rigidBody.velocity = transform.forward * speed;
         //calculamos la marce de tiempo a revisar para autodestruir el proyectil
         lifeTimeStamp = Time.time + lifeTime;
+
+
+        // Al inicializar, el daño actual se establece al daño base
+        originalDamage = damage;
+        currentDamage = damage;
     }
 
     public override void Deactivate()
@@ -106,6 +113,18 @@ public class Projectile : PoolEntity
 
     public void ApplyDamageBoost(float damageBoostAmount)
     {
-        damage *= damageBoostAmount;
+        // Guarda el daño base original si no se ha aplicado un aumento de daño aún
+        if (currentDamage == originalDamage)
+        {
+            originalDamage = currentDamage;
+        }
+
+        // Aplica el aumento de daño temporal
+        currentDamage += damageBoostAmount;
+    }
+    // Método para restablecer el daño base al valor original
+    public void ResetDamage()
+    {
+        currentDamage = originalDamage;
     }
 }

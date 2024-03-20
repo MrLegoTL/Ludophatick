@@ -34,7 +34,12 @@ public class SlotMachine : MonoBehaviour
     
 
     public static Action onClickPowerUp;
+    public static SlotMachine instance;
 
+    private void Awake()
+    {
+        if(instance == null) instance = this;
+    }
 
     private void Start()
     {
@@ -56,7 +61,7 @@ public class SlotMachine : MonoBehaviour
     {
         
         
-            animLever.SetTrigger("Lever");
+            //animLever.SetTrigger("Lever");
             Spin();
             // Descontar el dinero del jugador
             
