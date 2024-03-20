@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering;
 using UnityEngine.UIElements;
+using static UnityEditor.Searcher.SearcherWindow.Alignment;
 
 public class PlayerController : MonoBehaviour
 {
@@ -64,7 +66,9 @@ public class PlayerController : MonoBehaviour
     public float laserTime = 0.0f;
     public string laserAttack = "LaserBeamEnemy";
     public Transform shootingLaserPoint;
-    
+    //indicamos mediante el float, el tiempo de cooldown
+    public static Action<float> onShootLaser;
+
 
     [Header("Aiming")]
     //longitud del raycas a realizar
@@ -194,15 +198,24 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void Movement()
     {
-       
-
+        
+        
         //componemos el vector de direccion deseado a partir del input
-        direction.Set(horizontal,0f,vertical);
+        direction.Set(horizontal, 0f,vertical);
+        //transform.forward
         //para asegurarnos que las diagonales no tienen una maagnitud superior a 1, "Clampeamos" su valor
-        direction = Vector3.ClampMagnitude(direction, 1f);
+        direction = Vector3.ClampMagnitude(direction , 1f);
+
+        Vector3 tmp = Vector3.forward * vertical;
+        Vector3 tmp2 = Vector3.right * horizontal;
+        Vector3 desVel = tmp + tmp2;
 
         //calculamos la velocidad deseada en base a la driecion y la velocidad maxima
-        desiredVelocity = direction * movementSpeed;
+        //desiredVelocity = direction * movementSpeed;
+        
+        
+        
+        desiredVelocity = desVel.normalized * movementSpeed;
 
         Vector3 temp = transform.position + (direction * checkDistance);
         //respetamos la altura que ya tuviese el checkpoint
@@ -230,7 +243,7 @@ public class PlayerController : MonoBehaviour
 
             isMoving = true;
         }
-        //En caso de no existir input, paramos la rotacion del tanque
+        //En caso de no existir input, paramos la rotacion del player
         if ((horizontal == 0 && vertical == 0) || walled )
         {
             rb.angularVelocity = Vector3.zero;
@@ -364,6 +377,7 @@ public class PlayerController : MonoBehaviour
         {
             // Si se está moviendo el joystick derecho, calculamos la dirección del objetivo
             targetDirection = new Vector3(verticalAim, 0f, horizontalAim).normalized;
+            
 
 
         }
@@ -421,6 +435,7 @@ private void OnRoll()
 
         // Configura el retraso antes de poder disparar el láser de nuevo
         laserTime = Time.time + laserDelay;
+        onShootLaser?.Invoke(laserDelay);
     }
     
     public void ApplySpeedBoost(float speedBoostAmount)

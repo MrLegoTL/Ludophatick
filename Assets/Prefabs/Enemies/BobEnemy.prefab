@@ -255,6 +255,7 @@ MonoBehaviour:
   target: {fileID: 0}
   nav: {fileID: 4757233570578072942}
   animator: {fileID: 1092336799610088268}
+  nameAnimation: Bod_Idle
   attackDistance: 20
   enemyProjectile: EnemyBullets
   shootingPoint: {fileID: 2970445563520805}

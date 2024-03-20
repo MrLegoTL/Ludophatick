@@ -19741,7 +19741,14 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnAfterDead:
+    m_PersistentCalls:
+      m_Calls: []
   rb: {fileID: 5740578463446923270}
+  moneyDropped: 10
+  moneyPrefab: {fileID: 0}
+  moneyPoint: {fileID: 0}
+  moveAnimation: 
   launchForce: 500
 --- !u!114 &6848315022676061778
 MonoBehaviour:
@@ -19767,6 +19774,7 @@ MonoBehaviour:
   target: {fileID: 0}
   nav: {fileID: 8854073733171013004}
   animator: {fileID: 5616489647569602183}
+  nameAnimation: 'Stuart_Idle '
   attackDistance: 20
   enemyProjectile: EnemyBullets
   shootingPoint: {fileID: 6853036197271527427}

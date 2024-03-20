@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using TMPro;
+using System;
 
 public class PathBlocker : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class PathBlocker : MonoBehaviour
     public UnityEvent onDisable;
     //Indica si  el jugador esta dentro del area de interaccion
     private bool playerInRange = false;
+
+    public static Action onUnlockZone;
 
 
     private void Update()
@@ -51,7 +54,7 @@ public class PathBlocker : MonoBehaviour
         {
             if (GameManager.instance.PlayerHasEnoughMoney(unlockCost))
             {
-                unlockText.color = Color.black;
+                unlockText.color = Color.green;
                 unlockText.text = "Pulse E para desbloquear por "+ unlockCost.ToString() + " $";
             }
 
@@ -78,6 +81,7 @@ public class PathBlocker : MonoBehaviour
     public void DisableObject()
     {
         onDisable?.Invoke();
+        onUnlockZone?.Invoke();
     }
 
 

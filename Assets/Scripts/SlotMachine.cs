@@ -31,6 +31,9 @@ public class SlotMachine : MonoBehaviour
     //Indica si la tragaperra esta girando
     private bool isSpining =false;
     public float waitTime = 0f;
+    
+
+    public static Action onClickPowerUp;
 
 
     private void Start()
@@ -45,15 +48,20 @@ public class SlotMachine : MonoBehaviour
     }
     private void Update()
     {
-       
+        
     }
 
     
     public void StartSpin()
     {
         
-        animLever.SetTrigger("Lever");
-        Spin();
+        
+            animLever.SetTrigger("Lever");
+            Spin();
+            // Descontar el dinero del jugador
+            
+        
+        
         
         //Invoke("Spin",1);
     }
@@ -117,6 +125,7 @@ public class SlotMachine : MonoBehaviour
         isSpining = false;
         
     }
+    
 
     private void OnOptionClick(int index)
     {
@@ -147,7 +156,7 @@ public class SlotMachine : MonoBehaviour
                 Debug.LogWarning("Texto de opción no reconocido: " + selectedOptionText);
                 break;
         }
-
+        onClickPowerUp?.Invoke();
 
         // Imprime en la consola el texto de la opción seleccionada
         Debug.Log("Opción seleccionada: " + resultText[index].text);

@@ -12,6 +12,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable<float>
     public float maxHealth = 100;
     //vida actual del jugador
     public float currentHealth;
+    public Animator anim;
 
     [Header("HUD")]
     //referencia a la imagen que muestra la vida actual
@@ -90,6 +91,8 @@ public class PlayerHealth : MonoBehaviour, IDamageable<float>
     {
         //indicamos que el juagdor esta muerto
         isDead = false;
+        //ejecutamos la animacion de muerte
+        anim.SetTrigger("Dead");
         //verificamos si hay alguien suscrito al evento dead, si es asi lo invocamos
         OnPlayerDead?.Invoke();
         //unity event para gestion de acciones y efectos

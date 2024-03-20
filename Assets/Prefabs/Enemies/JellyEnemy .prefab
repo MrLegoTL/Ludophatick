@@ -9826,6 +9826,7 @@ MonoBehaviour:
   target: {fileID: 0}
   nav: {fileID: 18291252985017041}
   animator: {fileID: 7745990933163737394}
+  nameAnimation: Jelly_Idle
   attackDistance: 20
   enemyProjectile: EnemyBullets
   shootingPoint: {fileID: 1125577169134622243}

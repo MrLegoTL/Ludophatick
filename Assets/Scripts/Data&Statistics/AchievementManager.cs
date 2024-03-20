@@ -17,6 +17,10 @@ public class AchievementManager : MonoBehaviour
         //tened en cuenta que este metodo no podra ser DESUSCRITO por lo que debera utilizarse 
         //en clases que sean persistentes en nuestro proyecto
         EnemyHealth.OnDead += () => IncreaseStatAndCheckAchievement("kill", 1);
+        GameManager.onMoneyGet += IncreaseStatAndCheckAchievement;
+        GameManager.onMoneySpend += IncreaseStatAndCheckAchievement;
+        PathBlocker.onUnlockZone += () => IncreaseStatAndCheckAchievement("unlock", 1);
+        SlotMachine.onClickPowerUp += () => IncreaseStatAndCheckAchievement("powerUp", 1);
     }
     /// <summary>
     /// Incrementa una estadistica y verifica sus logros asociados

@@ -263,6 +263,7 @@ MonoBehaviour:
   target: {fileID: 0}
   nav: {fileID: 3132410538477675489}
   animator: {fileID: 8816003705153260116}
+  nameAnimation: Tank_Idle
   attackDistance: 10
   enemyProjectile: EnemyBullets
   shootingPoint: {fileID: 7619462662976751493}

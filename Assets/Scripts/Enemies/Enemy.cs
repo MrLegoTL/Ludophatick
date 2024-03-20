@@ -16,6 +16,7 @@ public class Enemy : PoolEntity
     public NavMeshAgent nav;
     //referencia public al animator que gestionara la maquina de estado
     public Animator animator;
+    public string nameAnimation;
 
     //distancia  a la que iniciara el ataque
     public float attackDistance = 10f;
@@ -53,6 +54,19 @@ public class Enemy : PoolEntity
         CheckForTarget(targetTagName);
     }
 
+
+    private void OnEnable()
+    {
+        //nos suscribimos a action static de la clase PlayerHealth, para reacionar a la muerte del jugador
+        PlayerHealth.OnPlayerDead += PlayerIsDead;
+    }
+
+    private void OnDestroy()
+    {
+        //nos dessucribimos en el momento de ser destruidos
+        PlayerHealth.OnPlayerDead -= PlayerIsDead;
+    }
+
     /// <summary>
     /// Busca el transform del objetivo con el tag indicado
     /// </summary>
@@ -77,6 +91,14 @@ public class Enemy : PoolEntity
                 target = possibleTarget.transform;
             }
         }
+    }
+
+    /// <summary>
+    /// Metodo para reaccionar a la muerte del jugador, pasando la maquina de estado a Idle
+    /// </summary>
+    public void PlayerIsDead()
+    {
+        animator.Play(nameAnimation);
     }
     public void CanEnemyShoot()
     {

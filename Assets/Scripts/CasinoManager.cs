@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
@@ -15,6 +16,8 @@ public class CasinoManager : MonoBehaviour
     //Indica si el juego esta pausado
     private bool isGamePaused = false;
     public Animator animLever;
+    public int casinoCost = 100;
+    public TMP_Text playText;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +31,7 @@ public class CasinoManager : MonoBehaviour
         {
             InteractWithPlayer();
         }
+        UpdatePlayText();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -81,12 +85,34 @@ public class CasinoManager : MonoBehaviour
 
     public void SpendMoney()
     {
-        casinoPanel.SetActive(false);
-        slotPanel.SetActive(true);
-        if (isGamePaused)
+        if (GameManager.instance.PlayerHasEnoughMoney(casinoCost))
         {
-            animLever.SetTrigger("Lever");
+            casinoPanel.SetActive(false);
+            slotPanel.SetActive(true);
+            if (isGamePaused)
+            {
+                animLever.SetTrigger("Lever");
+            }
+
         }
+
+    }
+
+    public void UpdatePlayText()
+    {
+        if (GameManager.instance.PlayerHasEnoughMoney(casinoCost))
+        {
+            playText.color = Color.black;
+
+        }
+
+        else
+        {
+            playText.color = Color.red;
+
+        }
+
+
 
     }
 }

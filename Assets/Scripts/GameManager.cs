@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Linq;
+using System;
+using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
@@ -36,6 +39,8 @@ public class GameManager : MonoBehaviour
     public int moneyCount = 0;
     //Referencia al texto del dinero
     public TMP_Text moneyText;
+    public static Action<string,int> onMoneyGet;
+    public static Action<string, int> onMoneySpend;
 
     public static GameManager instance;
 
@@ -156,6 +161,7 @@ public class GameManager : MonoBehaviour
     {
         //Aumenta el dinero del jugador
         moneyCount += amount;
+        onMoneyGet?.Invoke("ahorro",moneyCount);
 
         UpdateMoneyUI();
     }
@@ -180,7 +186,7 @@ public class GameManager : MonoBehaviour
         if (PlayerHasEnoughMoney(amount))
         {
             moneyCount -= amount;
-            // Aquí podrías agregar lógica adicional, como sonidos de dinero gastado o actualizaciones de UI.
+            onMoneySpend?.Invoke("pagar", amount);
         }
         else
         {
