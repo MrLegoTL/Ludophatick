@@ -19868,7 +19868,7 @@ MonoBehaviour:
       m_Calls: []
   rb: {fileID: 5740578463446923270}
   moneyDropped: 100
-  moneyPrefab: {fileID: 3717875888753308944, guid: de3584413a2d51042882a9fcb7a25742, type: 3}
+  moneyPrefab: {fileID: 237280253568306693, guid: daecec67a4e3884478229639c4ed3bba, type: 3}
   moneyPoint: {fileID: 2052125441564307105}
   moveAnimation: 'Stuart_Idle '
   launchForce: 500

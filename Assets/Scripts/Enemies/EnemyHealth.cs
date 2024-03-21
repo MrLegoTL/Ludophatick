@@ -95,7 +95,7 @@ public class EnemyHealth : MonoBehaviour , IDamageable<float>
 
         //llamada al action para los observadores suscritos
         OnDead?.Invoke();
-        Invoke("AfterDead", 10f);
+        //Invoke("AfterDead", 1f);
         
     }   
 

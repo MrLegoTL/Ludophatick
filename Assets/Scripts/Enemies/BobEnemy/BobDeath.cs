@@ -22,5 +22,6 @@ public class BobDeath : EnemyHealth
             rb.useGravity = false;
             rb.AddForce(Vector3.up * launchForce, ForceMode.Impulse);
         }
+        Invoke("AfterDead", 2f);
     }
 }

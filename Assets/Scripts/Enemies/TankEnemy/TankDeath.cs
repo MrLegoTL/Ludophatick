@@ -23,8 +23,8 @@ public class TankDeath : EnemyHealth
 
     public void TankDead()
     {
-        angryMode = false;
-        Enemy.instance.enemyShoot = true;
+       
+        
         Invoke("LaunchEnemy", 1f);
     }
     public void LaunchEnemy()
@@ -35,6 +35,8 @@ public class TankDeath : EnemyHealth
             rb.useGravity = false;
             rb.AddForce(Vector3.up * launchForce, ForceMode.Impulse);
         }
+
+        Invoke("AfterDead", 2f);
     }
    
     public void TankAngry()

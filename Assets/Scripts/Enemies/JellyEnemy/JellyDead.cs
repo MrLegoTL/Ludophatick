@@ -73,39 +73,11 @@ public class JellyDead : EnemyHealth
             }
         }
     }
-    //private void OnCollisionEnter(Collision collision)
-    //{
-        
-    //    if (isLunch)
-    //    {
-    //        //si el layer delobjeto impactado se encuentra desntro del layermask
-    //        if ((shootableLayer & (1 << collision.gameObject.layer)) != 0)
-    //        {
-    //            Debug.Log("Ha impactado");
-    //            //recuperamos todos los objetos impactados dentro de los layer especificados
-    //            Collider[] impacts = Physics.OverlapSphere(transform.position, damageAreaRadius, shootableLayer);
-
-    //            //recorremos todos los objetos impactados
-    //            foreach (Collider i in impacts)
-    //            {
-    //                //inicializamos la variale que almacenará el objeto dañable
-    //                damageable = null;
-
-    //                //tratamos de recuperar la interfaz dañable del objeto actual
-    //                if (i.TryGetComponent<IDamageable<float>>(out damageable))
-    //                {
-    //                    //si la conseguimos recuperar, aplicamos el daño definido
-    //                    damageable.TakeDamage(damage, transform.position);
-    //                }
-    //            }
-
-    //            //invocamos el unity event para realizar las acciones adicionales de impacto
-    //            onImpact?.Invoke();
-
-    //        }
-    //    }
-       
-    //}
+   
+    public void Afterimpact()
+    {
+        Invoke("AfterDead", 2f);
+    }
 
     public void IsLunch()
     {

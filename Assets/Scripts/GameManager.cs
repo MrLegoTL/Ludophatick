@@ -282,11 +282,11 @@ public class GameManager : MonoBehaviour
     private IEnumerator HudAnimation()
     {
         imageAnim.SetActive(true);
-        background.SetActive(false);
+        
         waveAnimator.SetTrigger("Show");
         yield return new WaitForSeconds(1f);
         imageAnim.SetActive(false);
-        background.SetActive(true);
+        
     }
    
 
