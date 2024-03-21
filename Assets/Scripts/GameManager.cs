@@ -17,6 +17,14 @@ public class GameManager : MonoBehaviour
         GameOver
     }
 
+    [Header("HUD")]
+    //animator del hud de oleadas
+    public Animator waveAnimator;
+    //texto del numero de oleadas
+    public TMP_Text waveNumber;
+    public GameObject background;
+    public GameObject imageAnim;
+
     [Header("Enemies")]
     //nombres  en la pool de los enemigos
     public string[] enemyList;
@@ -59,8 +67,7 @@ public class GameManager : MonoBehaviour
     [Header("EndGame")]
     public GameObject GameOverMenu;
 
-    //public Projectile projectile;
-    public LaserBeam laser;
+   
 
     public static GameManager instance;
 
@@ -79,10 +86,11 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        laser.RestartDamageLaser();      
+            
         //iniciamos la primera oleada al momento de comenzar la partida
         NewWave();
         GameOverMenu.SetActive(false);
+        imageAnim.SetActive(false);
         
     }
     private void OnEnable()
@@ -259,9 +267,9 @@ public class GameManager : MonoBehaviour
         //incremento el numero de la oleada
         currentWave++;
         ////asignamos el valor del numero de oleada
-        //waveNumber.text = currentWave.ToString();
+        waveNumber.text = currentWave.ToString();
         ////iniciamnos la aniamcion del hud de oleada
-        //waveAnimator.SetTrigger("Show");
+        StartCoroutine(HudAnimation());
         //calculamos el numero de enemigos que seran generados en esta oleada
         waveEnemies = currentWave * waveEnemyNumberMultiplier;
         //el numero de enemigos restantes se inicializara con el numero de enemigos de la oleada
@@ -271,6 +279,15 @@ public class GameManager : MonoBehaviour
         enemiesOnScene = 0;
     }
 
+    private IEnumerator HudAnimation()
+    {
+        imageAnim.SetActive(true);
+        background.SetActive(false);
+        waveAnimator.SetTrigger("Show");
+        yield return new WaitForSeconds(1f);
+        imageAnim.SetActive(false);
+        background.SetActive(true);
+    }
    
 
     public void CollectMoney(int amount)

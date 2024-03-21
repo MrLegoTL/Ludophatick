@@ -31,8 +31,8 @@ public class PowerUp
        player.ApplyDamageBoost(damageBoostAmount);
     }
     // Método para aplicar el PowerUp al proyectil
-    public void ApplyToLaserVeam(LaserBeam laser)
+    public void ApplyToLaserBeam(PlayerController player)
     {
-        laser.ApplyDamageBoost(damageBoostAmount);
+        player.ApplyDamageBoost(damageBoostAmount);
     }
 }

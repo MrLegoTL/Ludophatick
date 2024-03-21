@@ -6,6 +6,7 @@ using System;
 using TMPro;
 using UnityEngine.Events;
 using Unity.VisualScripting;
+using UnityEngine.Audio;
 
 public class SlotMachine : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class SlotMachine : MonoBehaviour
     public Projectile projectilePrefab;
     public LaserBeam laserBeamPrefab;
     public Animator animLever;
+    public AudioSource slotAudio;
     
 
     //referencia al panel de Slot
@@ -96,6 +98,7 @@ public class SlotMachine : MonoBehaviour
         int[] randomIndices = new int[resultImage.Length];
         //int randomIndex = 0;
         float elapsedTime = 0f;
+        slotAudio.Play();
 
         yield return new WaitForSecondsRealtime(1);
 
@@ -151,13 +154,13 @@ public class SlotMachine : MonoBehaviour
                 // Aplica el PowerUp de aumento de velocidad al jugador
                 PlayerController.instance.ApplySpeedBoost(1.1f);
                 break;
-            case "+10% Damage":
+            case "+20% Damage":
                 // Aplica el PowerUp de aumento de daño al proyectil
                 PlayerController.instance.ApplyDamageBoost(1.2f);
                 break;
-            case "x2 Laser Damage":
+            case "+20% Laser Damage":
                 // Aplica el PowerUp de aumento de daño al proyectil
-                ApplyDamageBoostToLaserBeam();
+                PlayerController.instance.ApplyLaserDamageBoost(1.2f);
                 break;
             // Agrega más casos según sea necesario para otras opciones de PowerUp
             default:
@@ -171,15 +174,5 @@ public class SlotMachine : MonoBehaviour
     }
  
 
-    private void ApplyDamageBoostToLaserBeam()
-    {
-        if(laserBeamPrefab != null)
-        {
-            laserBeamPrefab.ApplyDamageBoost(2f);
-        }
-        else
-        {
-            Debug.LogWarning("¡Prefab del Laser no asignado!");
-        }
-    }
+   
 }

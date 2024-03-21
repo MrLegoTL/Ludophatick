@@ -11,8 +11,7 @@ public class LaserBeam : PoolEntity
 
     [Header("Laser")]
     // Daño del láser
-    public float damage = 0.1f;
-    public float currentDamage;
+    public float damage = 0.3f;
     // Longitud máxima del láser
     public float maxLength = 1000f;
     // Capa de objetos a los que puede dañar el láser
@@ -79,7 +78,7 @@ public class LaserBeam : PoolEntity
             if (damageable != null)
             {
                 // Aplicamos daño al objeto
-                damageable.TakeDamage(currentDamage, hit.point);
+                damageable.TakeDamage(damage, hit.point);
                 onImpactEnemy?.Invoke(transform.position);
             }
 
@@ -135,12 +134,6 @@ public class LaserBeam : PoolEntity
 
         
     }
-    public void RestartDamageLaser()
-    {
-        currentDamage = damage;
-    }
-    public void ApplyDamageBoost(float damageBoostAmount)
-    {
-        currentDamage *= damageBoostAmount;
-    }
+    
+    
 }

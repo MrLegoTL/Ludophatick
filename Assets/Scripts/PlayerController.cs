@@ -61,8 +61,8 @@ public class PlayerController : MonoBehaviour
     public float currentDamage;
 
     [Header("Laser")]
-    // Agrega esta variable para asignar el rayo láser desde el editor de Unity
-    // public LaserBeam laserPrefab;
+    public float baseLaserDamage = 0.3f;
+    public float currentLaserDamage;
     // Agrega esta variable para controlar el retraso entre disparos del láser
     public float laserDelay = 1.0f;
     public float laserTime = 0.0f;
@@ -120,6 +120,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         currentDamage = baseDamage;
+        currentLaserDamage = baseLaserDamage;
     }
 
     // Update is called once per frame
@@ -436,10 +437,12 @@ public class PlayerController : MonoBehaviour
     void ShootLaser()
     {
         Vector3 laserDirection = transform.forward;
-        //// Crea una instancia del láser
-        //LaserBeam laser = Instantiate(laserPrefab, transform.position, Quaternion.LookRotation(laserDirection));
-        PoolManager.instance.Pull(laserAttack, shootingLaserPoint.position, Quaternion.LookRotation(laserDirection));
+        PoolEntity p;
 
+        p = PoolManager.instance.Pull(laserAttack, shootingLaserPoint.position, Quaternion.LookRotation(laserDirection));
+
+        LaserBeam laser = p.GetComponent<LaserBeam>();
+        laser.damage = currentLaserDamage;
 
         // Configura el retraso antes de poder disparar el láser de nuevo
         laserTime = Time.time + laserDelay;
@@ -454,6 +457,11 @@ public class PlayerController : MonoBehaviour
     {
 
         currentDamage *= damageBoostAmount;
+    }
+
+    public void ApplyLaserDamageBoost(float damageBoostAmount)
+    {
+        currentLaserDamage *= damageBoostAmount;
     }
 
     #endregion

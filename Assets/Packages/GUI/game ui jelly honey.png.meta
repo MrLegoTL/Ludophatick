@@ -160,7 +160,7 @@ TextureImporter:
         width: 1387
         height: 447
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -168,6 +168,27 @@ TextureImporter:
       bones: []
       spriteID: 3ee863f0c684cd84a970dc6991db6aab
       internalID: 1454509160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: game ui jelly honey_3
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 3774
+        width: 389
+        height: 395
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ac9309c67c6d954d8d01e4873668b20
+      internalID: 1241268480
       vertices: []
       indices: 
       edges: []
@@ -186,6 +207,7 @@ TextureImporter:
       game ui jelly honey_0: -748893504
       game ui jelly honey_1: 1528816519
       game ui jelly honey_2: 1454509160
+      game ui jelly honey_3: 1241268480
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

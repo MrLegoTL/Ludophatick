@@ -11,6 +11,10 @@ public class TankDeath : EnemyHealth
     //unity event para lanzar efectos al morir
     public UnityEvent OnAngryEvent;
 
+    private void Start()
+    {
+        
+    }
     private void Update()
     {
         TankAngry();
@@ -19,6 +23,8 @@ public class TankDeath : EnemyHealth
 
     public void TankDead()
     {
+        angryMode = false;
+        Enemy.instance.enemyShoot = true;
         Invoke("LaunchEnemy", 1f);
     }
     public void LaunchEnemy()
