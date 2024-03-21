@@ -42,6 +42,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6920133825338596716}
   - component: {fileID: 1167171383097946785}
+  - component: {fileID: 1403450398694816414}
   m_Layer: 4
   m_Name: RailLow
   m_TagString: Untagged
@@ -87,6 +88,22 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -5279040884171532412, guid: 7c541be7a3648b246a1fa23a10aebffc, type: 3}
+--- !u!208 &1403450398694816414
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8045919852968986265}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.1, y: 0.125, z: 0.4}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.1, z: 0.04}
+  m_TimeToStationary: 0.5
 --- !u!1001 &1352645191344733718
 PrefabInstance:
   m_ObjectHideFlags: 0

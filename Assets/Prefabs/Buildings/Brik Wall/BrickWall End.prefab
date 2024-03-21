@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8985321156084073741}
   - component: {fileID: 4481781209568101646}
+  - component: {fileID: 7951890713496274581}
   m_Layer: 4
   m_Name: BrickWall End
   m_TagString: Untagged
@@ -55,6 +56,22 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -3465135807896455170, guid: cc4a40cb3d6c52242902c2d3abe110a0, type: 3}
+--- !u!208 &7951890713496274581
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 824175360391570647}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.15}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.5, z: -0.4}
+  m_TimeToStationary: 0.5
 --- !u!1 &5990045880684647545
 GameObject:
   m_ObjectHideFlags: 0

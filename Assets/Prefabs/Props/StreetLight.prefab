@@ -42,6 +42,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2184860637534306048}
   - component: {fileID: 7743744860078691123}
+  - component: {fileID: 8648703590447753536}
   m_Layer: 8
   m_Name: StreetLight
   m_TagString: Untagged
@@ -87,6 +88,22 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -197886930678014297, guid: 858774cf38eb1064fbd52c4b64fb5f0b, type: 3}
+--- !u!208 &8648703590447753536
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5459758161884853138}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.05, y: 0.5, z: 0.05}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.5, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1001 &9163285947059357182
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3145298824990950874}
   - component: {fileID: 4173505727115113388}
+  - component: {fileID: 3632920188204774036}
   m_Layer: 4
   m_Name: RampSkate
   m_TagString: Untagged
@@ -55,6 +56,22 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 8507352667687518324, guid: 43728b69600f1e94a9197a0f634f1125, type: 3}
+--- !u!208 &3632920188204774036
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 962536044880426631}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.5, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &2682727117932069809
 GameObject:
   m_ObjectHideFlags: 0

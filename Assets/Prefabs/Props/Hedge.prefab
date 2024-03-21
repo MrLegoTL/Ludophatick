@@ -42,6 +42,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4590170865671803137}
   - component: {fileID: 5024430026082256735}
+  - component: {fileID: 4359565670339656372}
   m_Layer: 4
   m_Name: Hedge
   m_TagString: Untagged
@@ -87,6 +88,22 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -3461424260223276478, guid: 79170cdded659d449b32382661ad086f, type: 3}
+--- !u!208 &4359565670339656372
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8390877944857318207}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.15, y: 0.08, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.37, y: 0.13, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1001 &8404196858892217355
 PrefabInstance:
   m_ObjectHideFlags: 0

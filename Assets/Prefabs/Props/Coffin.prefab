@@ -42,6 +42,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1507100653580866108}
   - component: {fileID: 8011514259886494481}
+  - component: {fileID: 1483652638752011656}
   m_Layer: 8
   m_Name: Coffin
   m_TagString: Untagged
@@ -87,6 +88,22 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -8446744759580408319, guid: 9d3db50a49f3ecc44a3c872e71278886, type: 3}
+--- !u!208 &1483652638752011656
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2440645975449662948}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.25, y: 0.25, z: 0.4}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.25, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1001 &3466549932212715640
 PrefabInstance:
   m_ObjectHideFlags: 0

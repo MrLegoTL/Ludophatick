@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3860739458401632709}
   - component: {fileID: 5358327543281096474}
+  - component: {fileID: 308527759892669600}
   m_Layer: 8
   m_Name: Gravestone-decorative
   m_TagString: Untagged
@@ -55,6 +56,22 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -3156050798217321783, guid: 9de90e6c16b42864c9c36434d616992d, type: 3}
+--- !u!208 &308527759892669600
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2517395686466579448}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.225, y: 0.25, z: 0.1}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.25, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6496434023517690363
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,5 +18,6 @@ public class BossHealth : EnemyHealth
             rb.useGravity = false;
             rb.AddForce(Vector3.up * launchForce, ForceMode.Impulse);
         }
+        GameManager.instance.blockWave = false;
     }
 }

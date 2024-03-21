@@ -8,7 +8,7 @@ using System;
 public class BossManager : MonoBehaviour
 {
     //public bool fightBoss = false;
-
+    public GameObject boss;
     public UnityEvent onEntryInZone;
     public UnityEvent onStartFightBoss;
 
@@ -20,7 +20,7 @@ public class BossManager : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             EntryInZone();
-            Invoke("FightBoss", 0.5f);
+            Invoke("FightBoss", 1f);
         }
     }
 
@@ -32,6 +32,7 @@ public class BossManager : MonoBehaviour
     }
     public void FightBoss()
     {
+        //boss.SetActive(true); 
         onStartFightBoss?.Invoke();
     }
 }

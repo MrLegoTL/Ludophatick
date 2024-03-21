@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1755198255515530722}
   - component: {fileID: 5842201609424544286}
+  - component: {fileID: 6861845974305570792}
   m_Layer: 8
   m_Name: Gravestone-bevel
   m_TagString: Untagged
@@ -55,6 +56,22 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -562520833289434384, guid: 506e63ad9f8193e408818ce737bf5c59, type: 3}
+--- !u!208 &6861845974305570792
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3913275924024239472}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.225, y: 0.25, z: 0.1}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.25, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6257021934531304209
 GameObject:
   m_ObjectHideFlags: 0

@@ -42,6 +42,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2859926008877354387}
   - component: {fileID: 7991741801796257229}
+  - component: {fileID: 4447131332021189823}
   m_Layer: 4
   m_Name: BrickWall Curve
   m_TagString: Untagged
@@ -87,6 +88,22 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -8958615085754325540, guid: 6bab3649218b03940a626c6cbd6266ef, type: 3}
+--- !u!208 &4447131332021189823
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4356143026938063959}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.425, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.3, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1001 &8949965581093551987
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3161640992969899702}
   - component: {fileID: 1489020543174202127}
+  - component: {fileID: 911628853623141614}
   m_Layer: 8
   m_Name: Gravestone-cross-large
   m_TagString: Untagged
@@ -55,6 +56,22 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 5058252509535239810, guid: 0e17e9b36a711554780d66da8938cb37, type: 3}
+--- !u!208 &911628853623141614
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3555619827891455101}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.25, y: 0.5, z: 0.175}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.5, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6007026124238919613
 GameObject:
   m_ObjectHideFlags: 0
