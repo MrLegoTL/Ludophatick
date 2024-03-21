@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9668ddb74b473c408618228bc649599, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unlockCost: 100
+  unlockCost: 200
   unlockText: {fileID: 0}
   onUnlock:
     m_PersistentCalls:
