@@ -139,7 +139,7 @@ TextureImporter:
         width: 1002
         height: 1252
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -147,6 +147,69 @@ TextureImporter:
       bones: []
       spriteID: 6cf7160b85fa1a847bf6e3a7684602e3
       internalID: -758636845
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: game ui jelly green_2
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 1415
+        width: 1416
+        height: 132
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bec612dc11739a04a9a87c2f01703e91
+      internalID: 813364700
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: game ui jelly green_3
+      rect:
+        serializedVersion: 2
+        x: 157
+        y: 1644
+        width: 1415
+        height: 131
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a378ea7e251988d468668a825eebf97c
+      internalID: 764152459
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: game ui jelly green_4
+      rect:
+        serializedVersion: 2
+        x: 2939
+        y: 1232
+        width: 1382
+        height: 446
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03dee869e2cc0a64ca3537d10681f137
+      internalID: -1761167614
       vertices: []
       indices: 
       edges: []
@@ -164,6 +227,9 @@ TextureImporter:
     nameFileIdTable:
       game ui jelly green_0: -8567040
       game ui jelly green_1: -758636845
+      game ui jelly green_2: 813364700
+      game ui jelly green_3: 764152459
+      game ui jelly green_4: -1761167614
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
