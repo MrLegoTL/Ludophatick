@@ -87,9 +87,14 @@ public class SlotMachine : MonoBehaviour
         {
             
             StartCoroutine(SpinAnimation());
+            Invoke("Sounds", 1f);
         }
     }
+    public void Sounds()
+    {
 
+        slotAudio.Play();
+    }
    
     private IEnumerator SpinAnimation()
     {
@@ -98,13 +103,14 @@ public class SlotMachine : MonoBehaviour
         int[] randomIndices = new int[resultImage.Length];
         //int randomIndex = 0;
         float elapsedTime = 0f;
-        slotAudio.Play();
+        
 
         yield return new WaitForSecondsRealtime(1);
 
         //Inicia la animacion de giro
         while (elapsedTime <= spinDuration)
         {
+            
             // Obtiene índices aleatorios para seleccionar imágenes aleatorias
             for (int i = 0; i < resultImage.Length; i++)
             {
@@ -119,7 +125,7 @@ public class SlotMachine : MonoBehaviour
                 resultText[i].text = textOptions[randomIndices[i]];
             }
 
-
+            
             //Incrementa el tiempo transcurrido
             elapsedTime += Time.unscaledDeltaTime;
             //Espera un frame antes de continuar la animacion
