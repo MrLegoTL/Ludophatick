@@ -92,7 +92,7 @@ MonoBehaviour:
   shootableLayer:
     serializedVersion: 2
     m_Bits: 448
-  laserDuration: 4
+  laserDuration: 1
   startTime: 0
   impact: {fileID: 3837509733563517065}
   laserImpact: {fileID: 4173538065915471478}

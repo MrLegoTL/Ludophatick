@@ -42,6 +42,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8975435856621720781}
   - component: {fileID: 792489289457936614}
+  - component: {fileID: 4570767719360878448}
   m_Layer: 0
   m_Name: Bush
   m_TagString: Untagged
@@ -87,6 +88,22 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 7200813882020725636, guid: 2ee918a6a8cac7643957920f11275295, type: 3}
+--- !u!208 &4570767719360878448
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7358820928681239549}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.11, y: 0.175, z: 0.13}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.16, z: -0.01}
+  m_TimeToStationary: 0.5
 --- !u!1001 &7931040291757705008
 PrefabInstance:
   m_ObjectHideFlags: 0

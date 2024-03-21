@@ -41,6 +41,10 @@ public class GameManager : MonoBehaviour
     //contador de enemigos actuales en la escena
     private int enemiesOnScene;
 
+    [Header("BossFight")]
+    public bool blockWave = false;
+    //public static Action onFightBoss;
+
     [Header("Money Manager")]
     //Dinero del jugador
     public int moneyCount = 0;
@@ -75,8 +79,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        laser.RestartDamageLaser();
-        //projectile.RestartDamage();
+        laser.RestartDamageLaser();      
         //iniciamos la primera oleada al momento de comenzar la partida
         NewWave();
         GameOverMenu.SetActive(false);
@@ -111,7 +114,7 @@ public class GameManager : MonoBehaviour
         }
 
         //si han muerto todos los enemigos de la oleada actual
-        if (remainingEnemies <= 0)
+        if (remainingEnemies <= 0 && !blockWave)
         {
             //iniciamos una nueva oleada
             NewWave();
@@ -235,6 +238,7 @@ public class GameManager : MonoBehaviour
 
     }
 
+    
 
     /// <summary>
     /// Metodo ejecutado cuando un enemigo muere

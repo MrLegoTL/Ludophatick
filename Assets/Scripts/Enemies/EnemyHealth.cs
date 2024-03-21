@@ -33,7 +33,15 @@ public class EnemyHealth : MonoBehaviour , IDamageable<float>
         if (instance == null) instance = this;
     }
 
+    private void OnEnable()
+    {
+        BossManager.onFightBoss += Death;
+    }
 
+    private void OnDisable()
+    {
+        BossManager.onFightBoss -= Death;
+    }
     // Start is called before the first frame update
     void Start()
     {

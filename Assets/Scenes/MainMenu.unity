@@ -3416,7 +3416,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Ludophatick
+  m_text: LUDOPHATICK
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3257ecab2bccbee47b87e62ffcf2cd62, type: 2}
   m_sharedMaterial: {fileID: -8957405863143977239, guid: 3257ecab2bccbee47b87e62ffcf2cd62, type: 2}

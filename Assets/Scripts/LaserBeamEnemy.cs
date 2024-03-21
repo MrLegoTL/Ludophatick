@@ -57,9 +57,9 @@ public class LaserBeamEnemy : PoolEntity
     private void UpdateLaser()
     {
         // Obtenemos la dirección hacia el jugador
-        //Vector3 directionToPlayer = (PlayerController.instance.transform.position - transform.position).normalized;
+        Vector3 directionToPlayer = (PlayerController.instance.transform.position - transform.position).normalized;
         // Inicializamos el rayo láser desde la posición actual con la dirección hacia adelante
-        Ray ray = new Ray(transform.position, transform.forward);
+        Ray ray = new Ray(transform.position, directionToPlayer);
         RaycastHit hit;
 
         // Configuramos el line renderer

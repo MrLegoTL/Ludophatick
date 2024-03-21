@@ -57,10 +57,12 @@ public class PlayerController : MonoBehaviour
     public string bulletType = "RegularBullets";
     //variable para la distancia minima del disparo
     public float minShootDistance = 1f;
+    public float baseDamage = 10f;
+    public float currentDamage;
 
     [Header("Laser")]
     // Agrega esta variable para asignar el rayo láser desde el editor de Unity
-   // public LaserBeam laserPrefab;
+    // public LaserBeam laserPrefab;
     // Agrega esta variable para controlar el retraso entre disparos del láser
     public float laserDelay = 1.0f;
     public float laserTime = 0.0f;
@@ -92,7 +94,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 rollDirection;
     public float rollCooldown = 3f;
 
-    
+
 
 
     [Header("Animator")]
@@ -109,7 +111,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
         }
@@ -117,7 +119,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        currentDamage = baseDamage;
     }
 
     // Update is called once per frame
@@ -189,7 +191,7 @@ public class PlayerController : MonoBehaviour
         {
             OnRoll();
         }
-       
+
 
     }
 
@@ -198,13 +200,13 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void Movement()
     {
-        
-        
+
+
         //componemos el vector de direccion deseado a partir del input
-        direction.Set(horizontal, 0f,vertical);
+        direction.Set(horizontal, 0f, vertical);
         //transform.forward
         //para asegurarnos que las diagonales no tienen una maagnitud superior a 1, "Clampeamos" su valor
-        direction = Vector3.ClampMagnitude(direction , 1f);
+        direction = Vector3.ClampMagnitude(direction, 1f);
 
         Vector3 tmp = Vector3.forward * vertical;
         Vector3 tmp2 = Vector3.right * horizontal;
@@ -212,9 +214,9 @@ public class PlayerController : MonoBehaviour
 
         //calculamos la velocidad deseada en base a la driecion y la velocidad maxima
         //desiredVelocity = direction * movementSpeed;
-        
-        
-        
+
+
+
         desiredVelocity = desVel.normalized * movementSpeed;
 
         Vector3 temp = transform.position + (direction * checkDistance);
@@ -225,11 +227,11 @@ public class PlayerController : MonoBehaviour
 
         if (walled) desiredVelocity = Vector3.zero;
 
-        if ((horizontal!=0 || vertical != 0) && grounded && !walled )
+        if ((horizontal != 0 || vertical != 0) && grounded && !walled)
         {
             //aplicamos la velocidad deseada , aumentando frame a frame en base a la aceleracion
             rb.velocity = Vector3.MoveTowards(rb.velocity, desiredVelocity, Time.deltaTime * acceleration);
-            
+
 
             //debug ray para ver la direccion de velocidad del rigidbody
             if (showGizmos) Debug.DrawRay(transform.position, rb.velocity);
@@ -244,7 +246,7 @@ public class PlayerController : MonoBehaviour
             isMoving = true;
         }
         //En caso de no existir input, paramos la rotacion del player
-        if ((horizontal == 0 && vertical == 0) || walled )
+        if ((horizontal == 0 && vertical == 0) || walled)
         {
             rb.angularVelocity = Vector3.zero;
             isMoving = false;
@@ -258,7 +260,7 @@ public class PlayerController : MonoBehaviour
     {
         anim.SetBool("IsMoving", isMoving);
         anim.SetBool("Grounded", grounded);
-        
+
         //// Activa la animación si el jugador se está moviendo
         //if ((horizontal != 0 || vertical != 0))
         //{
@@ -315,14 +317,14 @@ public class PlayerController : MonoBehaviour
             //si estamos encontacto con elsuelo, aplicamos una fuerza vertical de tipo impulso
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
-        
-        
-        
+
+
+
     }
 
     private void Shoot()
     {
-                
+
         // si no hemoas superado el timpo estimado para poder volver a disparar, no haremos nada
         if (Time.time < shootTime) return;
         // Definimos el cañón desde el cual disparar y la posición de disparo
@@ -330,17 +332,23 @@ public class PlayerController : MonoBehaviour
         Vector3 shootPosition = gun.position;
         Vector3 shootDirectionRight = (aimingPivotRight.position - shootPosition).normalized;
         Vector3 shootDirectionLeft = (aimingPivotLeft.position - shootPosition).normalized;
+
+        PoolEntity p;
         if (leftGun)
         {
             anim.SetTrigger("Shoot Left");
             //solicitamos a la pool activar un proyectil en el cañon izquierdo
-            PoolManager.instance.Pull(bulletType, gun.position, Quaternion.LookRotation(shootDirectionLeft));
+            p = PoolManager.instance.Pull(bulletType, gun.position, Quaternion.LookRotation(shootDirectionLeft));
+
         }
         else
         {
             anim.SetTrigger("Shoot Right");
-            PoolManager.instance.Pull(bulletType, gun.position, Quaternion.LookRotation(shootDirectionRight));
+            p = PoolManager.instance.Pull(bulletType, gun.position, Quaternion.LookRotation(shootDirectionRight));
         }
+
+        Projectile projectile = p.GetComponent<Projectile>();
+        projectile.damage = currentDamage;
 
         shootTime = Time.time + shootDelay;
         leftGun = !leftGun;
@@ -377,7 +385,7 @@ public class PlayerController : MonoBehaviour
         {
             // Si se está moviendo el joystick derecho, calculamos la dirección del objetivo
             targetDirection = new Vector3(verticalAim, 0f, horizontalAim).normalized;
-            
+
 
 
         }
@@ -389,15 +397,15 @@ public class PlayerController : MonoBehaviour
             Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
-               
-
-    }  
 
 
-private void OnRoll()
+    }
+
+
+    private void OnRoll()
     {
         rollDirection = transform.forward;
-        
+
         StartCoroutine(Roll());
     }
 
@@ -406,15 +414,15 @@ private void OnRoll()
         isRolling = true;
         canShoot = false;
         Vector3 startPosition = transform.position;
-         
+
         Vector3 endPosition = startPosition + rollDirection * rollDistance;
         // Reproducir la animación de dash
         anim.SetTrigger("Roll");
         float startTime = Time.time;
-        while(Time.time < startTime + rollDuration)
+        while (Time.time < startTime + rollDuration)
         {
             float normalizedTime = (Time.time - startTime) / rollDuration;
-            transform.position =  Vector3.Lerp(startPosition, endPosition, normalizedTime);
+            transform.position = Vector3.Lerp(startPosition, endPosition, normalizedTime);
             yield return null;
         }
 
@@ -422,7 +430,7 @@ private void OnRoll()
         canShoot = true;
         yield return new WaitForSeconds(rollCooldown);
         isRolling = false;
-       
+
     }
 
     void ShootLaser()
@@ -431,16 +439,21 @@ private void OnRoll()
         //// Crea una instancia del láser
         //LaserBeam laser = Instantiate(laserPrefab, transform.position, Quaternion.LookRotation(laserDirection));
         PoolManager.instance.Pull(laserAttack, shootingLaserPoint.position, Quaternion.LookRotation(laserDirection));
-        
+
 
         // Configura el retraso antes de poder disparar el láser de nuevo
         laserTime = Time.time + laserDelay;
         onShootLaser?.Invoke(laserDelay);
     }
-    
+
     public void ApplySpeedBoost(float speedBoostAmount)
     {
-        movementSpeed *= speedBoostAmount; 
+        movementSpeed *= speedBoostAmount;
+    }
+    public void ApplyDamageBoost(float damageBoostAmount)
+    {
+
+        currentDamage *= damageBoostAmount;
     }
 
     #endregion

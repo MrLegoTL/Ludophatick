@@ -17,7 +17,7 @@ public class PathBlocker : MonoBehaviour
     public UnityEvent onUnlock;
     public UnityEvent onDisable;
     //Indica si  el jugador esta dentro del area de interaccion
-    private bool playerInRange = false;
+    public bool playerInRange = false;
 
     public static Action onUnlockZone;
 
@@ -76,6 +76,7 @@ public class PathBlocker : MonoBehaviour
             onUnlock?.Invoke();
 
             Invoke("DisableObject", 1f);
+            playerInRange = false;
         }
     }
     public void DisableObject()

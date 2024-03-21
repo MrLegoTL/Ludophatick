@@ -14,7 +14,7 @@ public class Projectile : PoolEntity
     [Header("Projectile")]
     //daño de projectil
     public float damage = 10f;
-    public float currentDamage;
+    
                               
     //velocidad de desplazamiento
     public float speed = 10f;
@@ -31,15 +31,16 @@ public class Projectile : PoolEntity
     //action que se invocara cuando se inicialice el proyectil
     public Action onInitialize;
 
-    public static Projectile instance;
+    //public static Projectile instance;
 
     private void Awake()
     {
-        if (instance == null) instance = this;
+        //if (instance == null) instance = this;
     }
     private void Start()
     {
-       // currentDamage = damage;
+        // currentDamage = damage;
+        damage = 10f;
     }
 
     // Update is called once per frame
@@ -116,10 +117,6 @@ public class Projectile : PoolEntity
 
     
 
-    public void ApplyDamageBoost(float damageBoostAmount)
-    {
-
-        damage *= damageBoostAmount;
-    }
+   
    
 }
