@@ -266,9 +266,12 @@ public class GameManager : MonoBehaviour
         waveEnemies = currentWave * waveEnemyNumberMultiplier;
         //el numero de enemigos restantes se inicializara con el numero de enemigos de la oleada
         remainingEnemies = waveEnemies;
+        maxEnemiesOnScene = waveEnemies;
         //inicializamos el contador de numero de enemigos presentes en la escena
         enemiesOnScene = 0;
     }
+
+   
 
     public void CollectMoney(int amount)
     {

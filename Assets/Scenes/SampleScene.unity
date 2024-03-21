@@ -40384,7 +40384,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7803209969940002399, guid: 66f25bdf67e071847b3f67f6e79fd35f, type: 3}
       propertyPath: OnDeadEvent.m_PersistentCalls.m_Calls.Array.size
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7803209969940002399, guid: 66f25bdf67e071847b3f67f6e79fd35f, type: 3}
       propertyPath: OnAfterDead.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -49985,9 +49985,9 @@ MonoBehaviour:
   - {fileID: 174892586}
   - {fileID: 946026822}
   spawnDelay: 1
-  waveEnemyNumberMultiplier: 5
+  waveEnemyNumberMultiplier: 3
   currentWave: 0
-  maxEnemiesOnScene: 3
+  maxEnemiesOnScene: 5
   blockWave: 0
   moneyCount: 9999
   moneyText: {fileID: 847311470}
@@ -51971,13 +51971,13 @@ MonoBehaviour:
     prewarm: 0
   - id: BobEnemy
     prefab: {fileID: 3847913794622064603, guid: 9e2f6cb54b85eff4791ba4bd875e7cfc, type: 3}
-    prewarm: 10
+    prewarm: 0
   - id: JellyEnemy
     prefab: {fileID: 773351270158230330, guid: f38693a84de779945960d0fde0f502e4, type: 3}
-    prewarm: 10
+    prewarm: 0
   - id: TankEnemy
     prefab: {fileID: 512746984389975271, guid: 03f49e02c886b36479b4873a78592c71, type: 3}
-    prewarm: 10
+    prewarm: 0
 --- !u!4 &1617207412
 Transform:
   m_ObjectHideFlags: 0
@@ -52072,7 +52072,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3131916678065037790, guid: 04ed8c53c6a718448a2d0281962b1793, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 70.3
+      value: 63.8
       objectReference: {fileID: 0}
     - target: {fileID: 3131916678065037790, guid: 04ed8c53c6a718448a2d0281962b1793, type: 3}
       propertyPath: m_LocalPosition.y
@@ -58383,7 +58383,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3131916678065037790, guid: 04ed8c53c6a718448a2d0281962b1793, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -35.199997
+      value: -19.1
       objectReference: {fileID: 0}
     - target: {fileID: 3131916678065037790, guid: 04ed8c53c6a718448a2d0281962b1793, type: 3}
       propertyPath: m_LocalPosition.y
@@ -58391,7 +58391,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3131916678065037790, guid: 04ed8c53c6a718448a2d0281962b1793, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 68.6
+      value: 72.91
       objectReference: {fileID: 0}
     - target: {fileID: 3131916678065037790, guid: 04ed8c53c6a718448a2d0281962b1793, type: 3}
       propertyPath: m_LocalRotation.w
@@ -66048,7 +66048,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3131916678065037790, guid: 04ed8c53c6a718448a2d0281962b1793, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 70.3
+      value: 63.1
       objectReference: {fileID: 0}
     - target: {fileID: 3131916678065037790, guid: 04ed8c53c6a718448a2d0281962b1793, type: 3}
       propertyPath: m_LocalPosition.y
@@ -66056,7 +66056,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3131916678065037790, guid: 04ed8c53c6a718448a2d0281962b1793, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 134.8
+      value: 132.4
       objectReference: {fileID: 0}
     - target: {fileID: 3131916678065037790, guid: 04ed8c53c6a718448a2d0281962b1793, type: 3}
       propertyPath: m_LocalRotation.w
