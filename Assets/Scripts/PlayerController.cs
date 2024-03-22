@@ -23,9 +23,7 @@ public class PlayerController : MonoBehaviour
     private float vertical = 0f;
     private bool isMoving = false;
 
-    [Header("Jump")]
-    public float jumpForce = 10f;
-    public bool canJump = false;
+    
 
     [Header("Physics")]
     public Rigidbody rb;
@@ -176,10 +174,7 @@ public class PlayerController : MonoBehaviour
         horizontal = Input.GetAxisRaw("Horizontal");
         vertical = Input.GetAxisRaw("Vertical");
 
-        if (Input.GetButtonDown("Jump"))
-        {
-            Jump();
-        }
+       
         if (Input.GetButton("Fire1") && canShoot)
         {
             Shoot();
@@ -310,18 +305,7 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// Aplica una fuerza vertical para saltar
     /// </summary>
-    private void Jump()
-    {
-        if (grounded)
-        {
-            anim.SetTrigger("Jump");
-            //si estamos encontacto con elsuelo, aplicamos una fuerza vertical de tipo impulso
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-        }
-
-
-
-    }
+   
 
     private void Shoot()
     {

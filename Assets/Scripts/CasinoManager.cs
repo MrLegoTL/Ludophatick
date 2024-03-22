@@ -18,6 +18,7 @@ public class CasinoManager : MonoBehaviour
     public Animator animLever;
     public int casinoCost = 100;
     public TMP_Text playText;
+    public TMP_Text casinoText;
     // Start is called before the first frame update
     void Start()
     {
@@ -38,6 +39,7 @@ public class CasinoManager : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            casinoText.gameObject.SetActive(true);
             canInteract = true;
         }
     }
@@ -46,7 +48,8 @@ public class CasinoManager : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            canInteract=false;
+            casinoText.gameObject.SetActive(false);
+            canInteract =false;
         }
     }
 

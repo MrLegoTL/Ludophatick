@@ -201,6 +201,8 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
+    
+
     public void EndGame()
     {
         //Cambia el estado del juego

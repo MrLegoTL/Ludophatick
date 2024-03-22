@@ -181,7 +181,7 @@ TextureImporter:
         width: 389
         height: 395
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -189,6 +189,69 @@ TextureImporter:
       bones: []
       spriteID: 0ac9309c67c6d954d8d01e4873668b20
       internalID: 1241268480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: game ui jelly honey_4
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 1413
+        width: 1411
+        height: 139
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 61cb52e4595b36d48b62e1b2bbbf0cb3
+      internalID: -128033040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: game ui jelly honey_5
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 1638
+        width: 1411
+        height: 139
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 16f4a9458fac0ee498ed24ba8c1e8333
+      internalID: -2108077456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: game ui jelly honey_6
+      rect:
+        serializedVersion: 2
+        x: 675
+        y: 3758
+        width: 421
+        height: 428
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 210b8de12f49ac34ca2ff672cae56a2a
+      internalID: -1436813016
       vertices: []
       indices: 
       edges: []
@@ -208,6 +271,9 @@ TextureImporter:
       game ui jelly honey_1: 1528816519
       game ui jelly honey_2: 1454509160
       game ui jelly honey_3: 1241268480
+      game ui jelly honey_4: -128033040
+      game ui jelly honey_5: -2108077456
+      game ui jelly honey_6: -1436813016
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
