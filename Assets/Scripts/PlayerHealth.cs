@@ -31,7 +31,9 @@ public class PlayerHealth : MonoBehaviour, IDamageable<float>
     //para controlar si el jugador ha sufrido daño
     private bool damaged;
 
-    
+    [Header("Cheats")]
+    [SerializeField]
+    private bool isImmune = false;
 
     // Start is called before the first frame update
     void Start()
@@ -73,12 +75,16 @@ public class PlayerHealth : MonoBehaviour, IDamageable<float>
     {
         //si ya esta muerto no hacemos nada
         if (isDead) return;
-        //indicamos que le jugador ha sido dañado
-        damaged = true;
-        //aplicamos el daño recibido
-        currentHealth -= amount;
-        //actualizamos el estado de la barra de vida
-        healthBar.fillAmount = currentHealth / maxHealth;
+        if (!isImmune)
+        {
+            //indicamos que le jugador ha sido dañado
+            damaged = true;
+            //aplicamos el daño recibido
+            currentHealth -= amount;
+            //actualizamos el estado de la barra de vida
+            healthBar.fillAmount = currentHealth / maxHealth;
+        }
+        
 
         //si la vida del jugador llega a 0, realiza las acciones de muerte
         if(IsDead()) Death() ;
@@ -105,5 +111,13 @@ public class PlayerHealth : MonoBehaviour, IDamageable<float>
     void EndGame()
     {
         GameManager.instance.EndGame();
+    }
+
+    /// <summary>
+    /// Metodo que te hace inmune
+    /// </summary>
+    public void SetImmunity()
+    {
+        isImmune = !isImmune;
     }
 }

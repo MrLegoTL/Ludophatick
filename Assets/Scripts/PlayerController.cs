@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering;
 using UnityEngine.UIElements;
-using static UnityEditor.Searcher.SearcherWindow.Alignment;
+
 
 public class PlayerController : MonoBehaviour
 {
@@ -98,6 +98,15 @@ public class PlayerController : MonoBehaviour
     [Header("Animator")]
     public Animator anim;
 
+    [Header("Cheats")]
+    [SerializeField]
+    private bool isActivatedCheats = false;
+    public GameObject cheatPanel;
+    private bool moreDamage = false;
+    private bool moreLaserDamage = false;
+    private bool moreMoney = false;
+    
+
     //solo vamos a comprobar si es mayor que 0, asin que no necesitamos mas capacidad
     Collider[] colliderBuffer = new Collider[1];
 
@@ -187,7 +196,20 @@ public class PlayerController : MonoBehaviour
         {
             OnRoll();
         }
+        if (Input.GetKey(KeyCode.F1))
+        {
+            isActivatedCheats = !isActivatedCheats;
 
+            if (isActivatedCheats)
+            {
+                cheatPanel.SetActive(true);
+            }
+            else
+            {
+                cheatPanel.SetActive(false);
+            }
+            
+        }
 
     }
 
@@ -448,5 +470,57 @@ public class PlayerController : MonoBehaviour
         currentLaserDamage *= damageBoostAmount;
     }
 
+
+
+    /// <summary>
+    /// Metodo que aumenta tu daño de ataque
+    /// </summary>
+    public void MoreDamage()
+    {
+        moreDamage = !moreDamage;
+        if (moreDamage)
+        {
+            currentDamage*= 999;
+        }
+        else
+        {
+            currentDamage /= 999;
+        }
+
+    }
+
+    /// <summary>
+    /// Metodo que aumenta tu daño de laser
+    /// </summary>
+    public void MoreLaserDamage()
+    {
+        moreLaserDamage = !moreLaserDamage;
+        if (moreLaserDamage)
+        {
+            currentLaserDamage *= 999;
+        }
+        else
+        {
+            currentLaserDamage /= 999;
+        }
+
+    }
+
+    /// <summary>
+    /// Metodo que aumenta tu dinero
+    /// </summary>
+    public void MoreMoney()
+    {
+        moreMoney = !moreMoney;
+        if (moreMoney)
+        {
+            GameManager.instance.moneyCount += 9999;
+        }
+        else
+        {
+            GameManager.instance.moneyCount -= 999;
+        }
+
+    }
     #endregion
 }
